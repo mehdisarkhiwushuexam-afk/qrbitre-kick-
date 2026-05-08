@@ -26,11 +26,11 @@
     z-index:9999; transition:opacity 0.8s ease;
   }
   #splash.fade-out { opacity:0; pointer-events:none; }
-  .logo-wrap { position:relative; width:220px; height:220px; }
+  .logo-wrap { position:relative; width:200px; height:200px; }
   .logo-wrap img { width:100%; height:100%; border-radius:50%; object-fit:cover; }
   .logo-glow {
-    position:absolute; inset:-20px; border-radius:50%;
-    background:radial-gradient(circle, rgba(192,0,26,0.8) 0%, rgba(192,0,26,0.3) 40%, transparent 70%);
+    position:absolute; inset:-15px; border-radius:50%;
+    background:radial-gradient(circle, rgba(192,0,26,0.6) 0%, transparent 70%);
     animation:pulse 2s ease-in-out infinite;
   }
   .logo-ring {
@@ -40,82 +40,52 @@
   }
   .logo-ring2 {
     position:absolute; inset:-8px; border-radius:50%;
-    border:2px solid rgba(192,0,26,0.5); opacity:0;
-    animation:ring-expand 2s ease-out 0.7s infinite;
+    border:3px solid var(--red); opacity:0;
+    animation:ring-expand 2s ease-out 0.6s infinite;
   }
-  .logo-ring3 {
-    position:absolute; inset:-8px; border-radius:50%;
-    border:1px solid rgba(192,0,26,0.3); opacity:0;
-    animation:ring-expand 2s ease-out 1.4s infinite;
-  }
-  @keyframes pulse { 0%,100%{transform:scale(1);opacity:0.7} 50%{transform:scale(1.12);opacity:1} }
-  @keyframes ring-expand { 0%{transform:scale(1);opacity:0.9} 100%{transform:scale(2.2);opacity:0} }
+  @keyframes pulse { 0%,100%{transform:scale(1);opacity:0.7} 50%{transform:scale(1.1);opacity:1} }
+  @keyframes ring-expand { 0%{transform:scale(1);opacity:0.8} 100%{transform:scale(1.8);opacity:0} }
   .splash-title {
-    margin-top:28px; color:white; text-align:center;
+    margin-top:30px; color:white; text-align:center;
     animation:fadeInUp 1s ease 0.5s both;
   }
-  .splash-title h1 { font-size:1.3rem; color:#ff2040; letter-spacing:2px; font-weight:800; text-shadow:0 0 20px rgba(192,0,26,0.8); }
-  .splash-title h2 { font-size:0.9rem; color:white; margin-top:6px; letter-spacing:1px; }
-  .splash-title p { font-size:0.78rem; color:#aaa; margin-top:4px; }
+  .splash-title h1 { font-size:1.4rem; color:var(--red); letter-spacing:2px; }
+  .splash-title p { font-size:0.85rem; color:#aaa; margin-top:5px; }
   .splash-bar {
-    margin-top:28px; width:280px; height:4px; background:#222; border-radius:2px; overflow:hidden;
+    margin-top:30px; width:250px; height:4px; background:#222; border-radius:2px; overflow:hidden;
     animation:fadeInUp 1s ease 0.8s both;
   }
   .splash-bar-fill {
-    height:100%; background:linear-gradient(90deg, var(--dark-red), var(--light-red), var(--dark-red));
-    background-size:200% 100%;
-    border-radius:2px; animation:load-bar 2.8s ease forwards, shimmer 1s linear infinite;
+    height:100%; background:linear-gradient(90deg, var(--dark-red), var(--light-red));
+    border-radius:2px; animation:load-bar 2.5s ease forwards;
   }
   @keyframes load-bar { 0%{width:0%} 100%{width:100%} }
-  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
   @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-
-  /* PARTICLES */
-  .particle {
-    position:absolute; border-radius:50%;
-    background:var(--red); opacity:0;
-    animation:float-up 3s ease-in-out infinite;
-  }
-  @keyframes float-up {
-    0%{transform:translateY(100vh) scale(0);opacity:0}
-    50%{opacity:0.3}
-    100%{transform:translateY(-100px) scale(1);opacity:0}
-  }
 
   /* HEADER */
   header {
-    background:linear-gradient(135deg, #0d0d0d 0%, #1a0004 40%, #2d0008 70%, var(--dark-red) 100%);
+    background:linear-gradient(135deg, var(--dark) 0%, #2a0005 50%, var(--dark-red) 100%);
     color:white; padding:0; position:sticky; top:0; z-index:100;
-    box-shadow:0 2px 30px rgba(192,0,26,0.4);
-    border-bottom:2px solid var(--red);
+    box-shadow:0 2px 20px rgba(0,0,0,0.4);
   }
   .header-inner {
     display:flex; align-items:center; justify-content:space-between;
-    padding:10px 24px; max-width:1400px; margin:0 auto;
+    padding:12px 24px; max-width:1400px; margin:0 auto;
   }
-  .header-logo { display:flex; align-items:center; gap:14px; }
-  .header-logo-img {
-    width:58px; height:58px; border-radius:50%; object-fit:cover;
-    border:2px solid var(--red); box-shadow:0 0 15px rgba(192,0,26,0.6);
-    animation:logo-pulse 3s ease-in-out infinite;
-  }
-  @keyframes logo-pulse {
-    0%,100%{box-shadow:0 0 10px rgba(192,0,26,0.5)}
-    50%{box-shadow:0 0 25px rgba(192,0,26,0.9), 0 0 40px rgba(192,0,26,0.4)}
-  }
-  .header-text h1 { font-size:1rem; font-weight:700; letter-spacing:0.5px; }
-  .header-text p { font-size:0.68rem; color:#ccc; margin-top:2px; }
+  .header-logo { display:flex; align-items:center; gap:15px; }
+  .header-logo img { width:60px; height:60px; border-radius:50%; border:2px solid var(--red); }
+  .header-text h1 { font-size:1.1rem; font-weight:700; }
+  .header-text p { font-size:0.72rem; color:#ccc; }
   nav { display:flex; gap:6px; }
   nav button {
-    background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); color:white;
-    padding:8px 16px; border-radius:8px; cursor:pointer; font-size:0.82rem;
-    transition:all 0.3s; white-space:nowrap; letter-spacing:0.3px;
+    background:transparent; border:1px solid rgba(255,255,255,0.2); color:white;
+    padding:8px 16px; border-radius:6px; cursor:pointer; font-size:0.82rem;
+    transition:all 0.3s; white-space:nowrap;
   }
   nav button:hover, nav button.active {
-    background:var(--red); border-color:var(--red); transform:translateY(-2px);
-    box-shadow:0 4px 15px rgba(192,0,26,0.5);
+    background:var(--red); border-color:var(--red); transform:translateY(-1px);
   }
-  .admin-btn { background:rgba(192,0,26,0.2)!important; border-color:rgba(192,0,26,0.5)!important; }
+  .admin-btn { background:rgba(192,0,26,0.3)!important; border-color:var(--red)!important; }
 
   /* MAIN */
   main { max-width:1400px; margin:0 auto; padding:24px; }
@@ -123,48 +93,33 @@
   /* SECTION CARDS */
   .section { display:none; }
   .section.active { display:block; animation:fadeIn 0.4s ease; }
-  @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
 
   .page-title {
     display:flex; align-items:center; gap:12px; margin-bottom:24px;
-    padding-bottom:14px; border-bottom:3px solid var(--red);
-    position:relative;
+    padding-bottom:12px; border-bottom:3px solid var(--red);
   }
-  .page-title::after {
-    content:''; position:absolute; bottom:-3px; left:0; width:60px; height:3px;
-    background:var(--light-red); border-radius:2px;
-  }
-  .page-title h2 { font-size:1.35rem; color:var(--dark); font-weight:700; }
-  .page-title .icon {
-    width:42px; height:42px; background:linear-gradient(135deg,var(--dark-red),var(--red));
-    border-radius:10px; display:flex; align-items:center; justify-content:center;
-    color:white; font-size:1.2rem; box-shadow:0 4px 12px rgba(192,0,26,0.4);
-  }
+  .page-title h2 { font-size:1.4rem; color:var(--dark); }
+  .page-title .icon { width:40px; height:40px; background:var(--red); border-radius:8px;
+    display:flex; align-items:center; justify-content:center; color:white; font-size:1.2rem; }
 
   /* FORM */
   .form-card {
-    background:white; border-radius:14px; padding:28px;
-    box-shadow:0 2px 20px rgba(0,0,0,0.08); margin-bottom:20px;
-    border:1px solid rgba(0,0,0,0.05);
-    position:relative; overflow:hidden;
-  }
-  .form-card::before {
-    content:''; position:absolute; top:0; left:0; right:0; height:3px;
-    background:linear-gradient(90deg, var(--dark-red), var(--red), var(--light-red));
+    background:white; border-radius:12px; padding:30px;
+    box-shadow:var(--shadow); margin-bottom:20px;
   }
   .form-section-title {
-    font-size:0.95rem; font-weight:700; color:var(--red);
-    padding:8px 0; margin:20px 0 16px; border-bottom:2px solid #ffeaed;
+    font-size:1rem; font-weight:700; color:var(--red);
+    padding:8px 0; margin:20px 0 15px; border-bottom:2px solid #ffeaed;
     display:flex; align-items:center; gap:8px;
   }
   .form-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
   .form-group { display:flex; flex-direction:column; gap:5px; }
   .form-group.full { grid-column:1/-1; }
-  .form-group.half { grid-column:span 2; }
-  label { font-size:0.78rem; font-weight:600; color:var(--mid); letter-spacing:0.3px; }
+  label { font-size:0.8rem; font-weight:600; color:var(--mid); }
   input, select, textarea {
-    padding:10px 13px; border:1.5px solid var(--border); border-radius:8px;
-    font-size:0.87rem; transition:all 0.2s; background:#fafafa; color:var(--dark);
+    padding:10px 12px; border:1.5px solid var(--border); border-radius:8px;
+    font-size:0.88rem; transition:border-color 0.2s; background:#fafafa;
   }
   input:focus, select:focus, textarea:focus {
     outline:none; border-color:var(--red); background:white;
@@ -172,9 +127,19 @@
   }
   textarea { resize:vertical; min-height:80px; }
 
+  /* TABLE in form for stats */
+  .stats-table { width:100%; border-collapse:collapse; font-size:0.82rem; }
+  .stats-table th {
+    background:var(--red); color:white; padding:10px 8px; text-align:center;
+    font-weight:600; font-size:0.78rem;
+  }
+  .stats-table td { padding:8px; border:1px solid var(--border); }
+  .stats-table td input { border:none; background:transparent; width:100%; padding:4px; font-size:0.82rem; }
+  .stats-table td input:focus { outline:1px solid var(--red); border-radius:3px; }
+
   /* IMAGE UPLOAD */
   .upload-zone {
-    border:2px dashed var(--border); border-radius:10px; padding:28px;
+    border:2px dashed var(--border); border-radius:10px; padding:30px;
     text-align:center; cursor:pointer; transition:all 0.3s; position:relative;
     background:#fafafa;
   }
@@ -185,35 +150,38 @@
   .upload-preview { margin-top:12px; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
   .preview-item { position:relative; }
   .preview-item img { width:80px; height:80px; object-fit:cover; border-radius:8px; border:2px solid var(--border); }
+  .preview-item .del-btn {
+    position:absolute; top:-6px; right:-6px; background:var(--red); color:white;
+    border:none; border-radius:50%; width:20px; height:20px; cursor:pointer; font-size:11px;
+    display:flex; align-items:center; justify-content:center;
+  }
 
   /* BUTTONS */
   .btn {
-    padding:11px 24px; border:none; border-radius:9px; cursor:pointer;
-    font-size:0.87rem; font-weight:600; transition:all 0.25s; display:inline-flex;
-    align-items:center; gap:8px; letter-spacing:0.3px;
+    padding:11px 24px; border:none; border-radius:8px; cursor:pointer;
+    font-size:0.88rem; font-weight:600; transition:all 0.2s; display:inline-flex;
+    align-items:center; gap:8px;
   }
-  .btn-primary { background:linear-gradient(135deg,var(--dark-red),var(--red)); color:white; }
-  .btn-primary:hover { background:linear-gradient(135deg,var(--red),var(--light-red)); transform:translateY(-2px); box-shadow:0 6px 20px rgba(192,0,26,0.45); }
+  .btn-primary { background:var(--red); color:white; }
+  .btn-primary:hover { background:var(--dark-red); transform:translateY(-1px); box-shadow:0 4px 12px rgba(192,0,26,0.4); }
   .btn-secondary { background:#f0f0f0; color:var(--dark); }
-  .btn-secondary:hover { background:#e0e0e0; transform:translateY(-1px); }
-  .btn-success { background:linear-gradient(135deg,#15803d,#16a34a); color:white; }
-  .btn-success:hover { transform:translateY(-1px); box-shadow:0 4px 12px rgba(21,128,61,0.4); }
-  .btn-warning { background:linear-gradient(135deg,#b45309,#d97706); color:white; }
-  .btn-warning:hover { transform:translateY(-1px); }
+  .btn-secondary:hover { background:#e0e0e0; }
+  .btn-success { background:#16a34a; color:white; }
+  .btn-success:hover { background:#15803d; }
+  .btn-warning { background:#d97706; color:white; }
+  .btn-warning:hover { background:#b45309; }
   .btn-sm { padding:7px 14px; font-size:0.78rem; }
-  .btn-group { display:flex; gap:10px; flex-wrap:wrap; margin-top:22px; }
+  .btn-group { display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; }
 
   /* ADMIN */
   .admin-gate {
-    max-width:420px; margin:60px auto; background:white; border-radius:18px;
-    padding:44px 40px; box-shadow:0 8px 40px rgba(0,0,0,0.12); text-align:center;
-    border-top:4px solid var(--red);
+    max-width:400px; margin:60px auto; background:white; border-radius:16px;
+    padding:40px; box-shadow:var(--shadow); text-align:center;
   }
-  .admin-gate .lock-icon { font-size:3.5rem; margin-bottom:16px; }
-  .admin-gate h3 { color:var(--dark); margin-bottom:8px; font-size:1.2rem; }
-  .admin-gate p { font-size:0.82rem; color:#888; margin-bottom:22px; }
+  .admin-gate .lock-icon { font-size:3rem; margin-bottom:16px; }
+  .admin-gate h3 { color:var(--dark); margin-bottom:20px; }
   .admin-gate input {
-    width:100%; margin-bottom:14px; text-align:center; letter-spacing:6px; font-size:1.1rem;
+    width:100%; margin-bottom:12px; text-align:center; letter-spacing:4px; font-size:1.1rem;
   }
 
   /* DATA TABLE */
@@ -225,7 +193,7 @@
   .data-table-wrap { background:white; border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
   .data-table { width:100%; border-collapse:collapse; font-size:0.82rem; }
   .data-table th {
-    background:linear-gradient(135deg, #0d0d0d, #2a0005);
+    background:linear-gradient(135deg, var(--dark), #2a0005);
     color:white; padding:12px 10px; text-align:left; font-size:0.78rem;
     white-space:nowrap; position:sticky; top:0;
   }
@@ -233,7 +201,7 @@
   .data-table tr:hover { background:#fff5f6; }
   .data-table img.av { width:40px; height:40px; border-radius:50%; object-fit:cover; border:2px solid var(--red); }
   .badge {
-    display:inline-block; padding:3px 10px; border-radius:20px; font-size:0.72rem;
+    display:inline-block; padding:3px 9px; border-radius:20px; font-size:0.72rem;
     font-weight:700; background:#ffeaed; color:var(--red);
   }
   .badge.nat { background:#e0f2fe; color:#0369a1; }
@@ -241,12 +209,12 @@
   /* FICHE */
   .fiche-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:20px; }
   .fiche-card {
-    background:white; border-radius:14px; overflow:hidden; box-shadow:var(--shadow);
-    transition:transform 0.25s, box-shadow 0.25s; border:1px solid rgba(0,0,0,0.04);
+    background:white; border-radius:12px; overflow:hidden; box-shadow:var(--shadow);
+    transition:transform 0.2s;
   }
-  .fiche-card:hover { transform:translateY(-5px); box-shadow:0 12px 35px rgba(0,0,0,0.15); }
+  .fiche-card:hover { transform:translateY(-4px); }
   .fiche-header {
-    background:linear-gradient(135deg, #0d0d0d, #2a0005, var(--dark-red));
+    background:linear-gradient(135deg, var(--dark), var(--dark-red));
     padding:20px; display:flex; align-items:center; gap:14px; color:white;
   }
   .fiche-header img { width:70px; height:70px; border-radius:50%; object-fit:cover; border:3px solid rgba(255,255,255,0.3); }
@@ -259,52 +227,10 @@
   .fiche-header p { font-size:0.78rem; color:#ccc; }
   .fiche-body { padding:16px; }
   .fiche-row { display:flex; justify-content:space-between; padding:6px 0;
-    border-bottom:1px solid #f5f5f5; font-size:0.82rem; }
-  .fiche-row span:first-child { color:#999; font-size:0.74rem; }
+    border-bottom:1px solid #f0f0f0; font-size:0.82rem; }
+  .fiche-row span:first-child { color:#888; font-size:0.75rem; }
   .fiche-row span:last-child { font-weight:600; text-align:right; max-width:60%; }
-  .fiche-actions { padding:12px 16px; display:flex; gap:8px; border-top:1px solid #f0f0f0; background:#fafafa; }
-
-  /* TABS */
-  .inner-tabs { display:flex; gap:8px; margin-bottom:22px; }
-  .inner-tab {
-    padding:9px 22px; border:2px solid var(--border); border-radius:9px;
-    background:white; cursor:pointer; font-size:0.84rem; font-weight:600;
-    transition:all 0.25s;
-  }
-  .inner-tab.active { background:linear-gradient(135deg,var(--dark-red),var(--red)); color:white; border-color:var(--red); box-shadow:0 4px 12px rgba(192,0,26,0.3); }
-
-  .docs-section { display:none; }
-  .docs-section.active { display:block; }
-
-  /* STATS */
-  .stats-bar { display:flex; gap:16px; margin-bottom:24px; flex-wrap:wrap; }
-  .stat-card {
-    background:white; border-radius:12px; padding:20px 24px; flex:1; min-width:150px;
-    box-shadow:var(--shadow); border-left:4px solid var(--red); display:flex; flex-direction:column;
-    transition:transform 0.2s;
-  }
-  .stat-card:hover { transform:translateY(-2px); }
-  .stat-card .num { font-size:2.2rem; font-weight:800; color:var(--red); }
-  .stat-card .lbl { font-size:0.74rem; color:#888; margin-top:4px; }
-
-  /* TOAST */
-  #toast {
-    position:fixed; bottom:24px; right:24px; background:#1a1a1a; color:white;
-    padding:13px 22px; border-radius:10px; font-size:0.85rem;
-    transform:translateY(100px); transition:transform 0.3s; z-index:9999;
-    display:flex; align-items:center; gap:10px; box-shadow:0 8px 25px rgba(0,0,0,0.25);
-  }
-  #toast.show { transform:translateY(0); }
-  #toast.success { border-left:4px solid #16a34a; }
-  #toast.error { border-left:4px solid var(--red); }
-
-  .empty-state { text-align:center; padding:60px 20px; color:#bbb; }
-  .empty-state .e-icon { font-size:4rem; margin-bottom:14px; }
-  .empty-state p { font-size:1rem; }
-
-  /* REGLAGE TAB */
-  #tab-reglage { }
-  .reglage-section { margin-bottom:20px; }
+  .fiche-actions { padding:12px 16px; display:flex; gap:8px; border-top:1px solid #f0f0f0; }
 
   /* PRINT */
   @media print {
@@ -312,60 +238,67 @@
     .section { display:block!important; }
     body { background:white; }
     .form-card, .data-table-wrap, .fiche-card { box-shadow:none; break-inside:avoid; }
-    .print-header { display:flex!important; }
+    .print-header {
+      display:flex!important; align-items:center; justify-content:space-between;
+      padding:10px; border-bottom:2px solid var(--red); margin-bottom:20px;
+    }
+    .print-header img { width:60px; }
     .fiche-card { border:1px solid #ddd; }
   }
   .print-header { display:none; }
-  .print-header.visible {
-    display:flex; align-items:center; justify-content:space-between;
-    padding:10px; border-bottom:2px solid var(--red); margin-bottom:20px;
-  }
 
-  /* Logo SVG animated for header */
-  .logo-container { position:relative; display:inline-block; }
-  .logo-outer-ring {
-    position:absolute; inset:-4px; border-radius:50%;
-    border:2px solid transparent;
-    background:linear-gradient(135deg,var(--red),transparent,var(--red)) border-box;
-    animation:spin-slow 8s linear infinite;
+  /* TOAST */
+  #toast {
+    position:fixed; bottom:24px; right:24px; background:#1a1a1a; color:white;
+    padding:12px 20px; border-radius:8px; font-size:0.85rem;
+    transform:translateY(100px); transition:transform 0.3s; z-index:9999;
+    display:flex; align-items:center; gap:10px;
   }
-  @keyframes spin-slow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+  #toast.show { transform:translateY(0); }
+  #toast.success { border-left:4px solid #16a34a; }
+  #toast.error { border-left:4px solid var(--red); }
 
-  /* Divider */
-  .section-divider {
-    height:1px; background:linear-gradient(90deg,transparent,var(--red),transparent);
-    margin:24px 0;
+  .stats-bar { display:flex; gap:16px; margin-bottom:24px; flex-wrap:wrap; }
+  .stat-card {
+    background:white; border-radius:10px; padding:18px 24px; flex:1; min-width:150px;
+    box-shadow:var(--shadow); border-left:4px solid var(--red); display:flex; flex-direction:column;
   }
+  .stat-card .num { font-size:2rem; font-weight:800; color:var(--red); }
+  .stat-card .lbl { font-size:0.75rem; color:#888; margin-top:2px; }
 
-  /* Field group label ar */
-  .field-ar { font-family:'Segoe UI',Tahoma,sans-serif; direction:rtl; text-align:right; }
-  .bilingual-label { display:flex; justify-content:space-between; align-items:center; }
-  .bilingual-label .ar { font-size:0.75rem; color:#999; direction:rtl; }
+  .empty-state {
+    text-align:center; padding:60px 20px; color:#aaa;
+  }
+  .empty-state .e-icon { font-size:4rem; margin-bottom:12px; }
+  .empty-state p { font-size:1rem; }
+
+  /* TABS inside admin */
+  .inner-tabs { display:flex; gap:8px; margin-bottom:20px; }
+  .inner-tab {
+    padding:9px 20px; border:2px solid var(--border); border-radius:8px;
+    background:white; cursor:pointer; font-size:0.84rem; font-weight:600;
+    transition:all 0.2s;
+  }
+  .inner-tab.active { background:var(--red); color:white; border-color:var(--red); }
+
+  .docs-section { display:none; }
+  .docs-section.active { display:block; }
 </style>
 </head>
 <body>
 
 <!-- SPLASH -->
 <div id="splash">
-  <!-- Particles -->
-  <div class="particle" style="width:6px;height:6px;left:15%;animation-delay:0s;animation-duration:4s"></div>
-  <div class="particle" style="width:4px;height:4px;left:25%;animation-delay:0.5s;animation-duration:3.5s"></div>
-  <div class="particle" style="width:8px;height:8px;left:70%;animation-delay:1s;animation-duration:5s"></div>
-  <div class="particle" style="width:5px;height:5px;left:85%;animation-delay:1.5s;animation-duration:3s"></div>
-  <div class="particle" style="width:3px;height:3px;left:50%;animation-delay:0.8s;animation-duration:4.5s"></div>
-
   <div class="logo-wrap">
     <div class="logo-glow"></div>
     <div class="logo-ring"></div>
     <div class="logo-ring2"></div>
-    <div class="logo-ring3"></div>
     <img id="splash-logo" src="" alt="Logo" onerror="this.style.display='none'">
-    <div id="splash-placeholder" style="width:220px;height:220px;border-radius:50%;background:linear-gradient(135deg,#5a0008,#c0001a);display:flex;align-items:center;justify-content:center;font-size:4rem;color:white;border:4px solid var(--red)">🥊</div>
+    <div id="splash-placeholder" style="width:200px;height:200px;border-radius:50%;background:linear-gradient(135deg,#8b0012,#c0001a);display:flex;align-items:center;justify-content:center;font-size:3rem;color:white;">🥊</div>
   </div>
   <div class="splash-title">
     <h1>الجامعة التونسية للكيك و التاي بوكسينغ</h1>
-    <h2>Fédération Tunisienne de Kick Thai Boxing</h2>
-    <p>Savate & Disciplines Associées — Gestion des Arbitres</p>
+    <p>Fédération Tunisienne de Kick Thai Boxing Savate & DA</p>
   </div>
   <div class="splash-bar"><div class="splash-bar-fill"></div></div>
 </div>
@@ -377,19 +310,17 @@
 <header>
   <div class="header-inner">
     <div class="header-logo">
-      <div class="logo-container">
-        <img id="header-logo" class="header-logo-img" src="" alt="Logo" onerror="this.style.display='none'">
-        <div id="header-placeholder" style="width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--dark-red),var(--red));display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:white;box-shadow:0 0 20px rgba(192,0,26,0.6)">🥊</div>
-      </div>
+      <img id="header-logo" src="" alt="Logo" onerror="this.style.display='none'">
+      <div id="header-placeholder" style="width:60px;height:60px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:white;">🥊</div>
       <div class="header-text">
-        <h1>Fédération Tunisienne de Kick Thai Boxing Savate & DA</h1>
-        <p>الجامعة التونسية للكيك و التاي بوكسينغ السافات و الأنشطة التابعة — إدارة الحكام</p>
+        <h1>Fédération Tunisienne de Kick Thai Boxing</h1>
+        <p>Savate et des Disciplines Associées — Gestion des Arbitres</p>
       </div>
     </div>
     <nav>
-      <button class="active" onclick="showSection('inscription',this)">📋 Inscription</button>
-      <button onclick="showSection('documents',this)">📁 Documents</button>
-      <button class="admin-btn" onclick="showSection('admin',this)">🔐 Admin</button>
+      <button class="active" onclick="showSection('inscription')">📋 Inscription</button>
+      <button onclick="showSection('documents')">📁 Documents</button>
+      <button class="admin-btn" onclick="showSection('admin')">🔐 Admin</button>
     </nav>
   </div>
 </header>
@@ -400,7 +331,7 @@
 <div id="section-inscription" class="section active">
   <div class="page-title">
     <div class="icon">📋</div>
-    <h2>بطاقة إرشادات حكم — Fiche d'Accréditation Arbitre</h2>
+    <h2>Bطاقة إرشادات حكم — Fiche d'Accréditation Arbitre</h2>
   </div>
 
   <form id="form-arbitre" onsubmit="saveArbitre(event)">
@@ -408,55 +339,55 @@
       <div class="form-section-title">👤 Informations Personnelles — المعلومات الشخصية</div>
       <div class="form-grid">
         <div class="form-group">
-          <label class="bilingual-label"><span>Nom & Prénom *</span><span class="ar">الاسم واللقب</span></label>
+          <label>الاسم واللقب — Nom & Prénom *</label>
           <input type="text" id="f-nom" placeholder="Ahmed Ben Ali" required>
         </div>
         <div class="form-group">
-          <label class="bilingual-label"><span>Date de Naissance *</span><span class="ar">تاريخ الولادة</span></label>
+          <label>تاريخ الولادة — Date de Naissance *</label>
           <input type="date" id="f-dob" required>
         </div>
         <div class="form-group">
-          <label class="bilingual-label"><span>Lieu de Naissance</span><span class="ar">مكانها</span></label>
+          <label>مكانها — Lieu de Naissance</label>
           <input type="text" id="f-lieu-nais" placeholder="Tunis">
         </div>
         <div class="form-group">
-          <label class="bilingual-label"><span>CIN *</span><span class="ar">رقم بطاقة التعريف</span></label>
+          <label>رقم بطاقة التعريف — CIN *</label>
           <input type="text" id="f-cin" placeholder="12345678" required>
         </div>
         <div class="form-group">
-          <label class="bilingual-label"><span>Date CIN</span><span class="ar">تاريخ البطاقة</span></label>
+          <label>التاريخ — Date CIN</label>
           <input type="date" id="f-cin-date">
         </div>
         <div class="form-group">
-          <label class="bilingual-label"><span>Délivrée à</span><span class="ar">صادرة</span></label>
+          <label>صادرة — Délivrée à</label>
           <input type="text" id="f-cin-lieu" placeholder="Tunis">
         </div>
         <div class="form-group full">
-          <label class="bilingual-label"><span>Adresse</span><span class="ar">العنوان الشخصي</span></label>
+          <label>العنوان الشخصي — Adresse</label>
           <input type="text" id="f-adresse" placeholder="Rue, Ville">
         </div>
         <div class="form-group">
-          <label class="bilingual-label"><span>Code Postal</span><span class="ar">الترقيم البريدي</span></label>
+          <label>الترقيم البريدي — Code Postal</label>
           <input type="text" id="f-cp" placeholder="1000">
         </div>
         <div class="form-group">
-          <label class="bilingual-label"><span>Téléphone</span><span class="ar">الهاتف</span></label>
+          <label>الهاتف — Téléphone</label>
           <input type="tel" id="f-tel" placeholder="+216 XX XXX XXX">
         </div>
         <div class="form-group">
-          <label class="bilingual-label"><span>Nationalité</span><span class="ar">الجنسية</span></label>
+          <label>الجنسية — Nationalité</label>
           <input type="text" id="f-nationalite" value="Tunisienne">
         </div>
         <div class="form-group">
-          <label class="bilingual-label"><span>Profession</span><span class="ar">المهنة</span></label>
+          <label>المهنة — Profession</label>
           <input type="text" id="f-profession" placeholder="Enseignant, ...">
         </div>
         <div class="form-group">
-          <label class="bilingual-label"><span>Association / Club</span><span class="ar">الجمعية / النادي</span></label>
+          <label>الجمعية / النادي — Association/Club</label>
           <input type="text" id="f-club" placeholder="Nom du club">
         </div>
         <div class="form-group">
-          <label class="bilingual-label"><span>Niveau Scolaire</span><span class="ar">المستوى الثقافي</span></label>
+          <label>المستوى الثقافي — Niveau Scolaire</label>
           <select id="f-niveau">
             <option value="">— Choisir —</option>
             <option>Primaire</option><option>Secondaire</option>
@@ -465,46 +396,21 @@
           </select>
         </div>
         <div class="form-group">
-          <label class="bilingual-label"><span>Début Activité</span><span class="ar">تاريخ بداية ممارسة النشاط</span></label>
+          <label>تاريخ بداية ممارسة النشاط — Début Activité</label>
           <input type="date" id="f-debut">
         </div>
         <div class="form-group">
-          <label class="bilingual-label"><span>Grade Actuel</span><span class="ar">التصنيف الحالي</span></label>
+          <label>التصنيف الحالي — Grade Actuel</label>
           <input type="text" id="f-grade" placeholder="National, International...">
         </div>
         <div class="form-group">
-          <label class="bilingual-label"><span>Date Grade</span><span class="ar">تاريخ التصنيف</span></label>
+          <label>تاريخ التصنيف — Date Grade</label>
           <input type="date" id="f-grade-date">
         </div>
       </div>
 
-      <div class="section-divider"></div>
-
-      <!-- NEW FIELDS -->
-      <div class="form-section-title">📊 Expérience & Participations — الخبرة والمشاركات</div>
-      <div class="form-grid">
-        <div class="form-group">
-          <label class="bilingual-label"><span>Années d'expérience en arbitrage</span><span class="ar">عدد سنوات الخبرة في التحكيم</span></label>
-          <input type="number" id="f-experience" placeholder="Ex: 5" min="0">
-        </div>
-        <div class="form-group">
-          <label class="bilingual-label"><span>Autre fonction au sein de la Fédération</span><span class="ar">صفة أخرى صلب الجامعة</span></label>
-          <input type="text" id="f-autre-fonction" placeholder="Entraîneur, Manager, Membre commission...">
-        </div>
-        <div class="form-group full">
-          <label class="bilingual-label"><span>Participations Internationales</span><span class="ar">أهم المشاركات الدولية</span></label>
-          <textarea id="f-part-intl" placeholder="Ex: Championnat du Monde 2022 (Thaïlande), Coupe d'Europe 2023 (Italie)..."></textarea>
-        </div>
-        <div class="form-group full">
-          <label class="bilingual-label"><span>Participations Nationales</span><span class="ar">أهم المشاركات الوطنية</span></label>
-          <textarea id="f-part-nat" placeholder="Ex: Championnat National 2023 (Tunis), Coupe de Tunisie 2024..."></textarea>
-        </div>
-      </div>
-
-      <div class="section-divider"></div>
-
       <!-- PHOTO UPLOAD -->
-      <div class="form-section-title">📷 Photo de l'Arbitre — صورة الحكم</div>
+      <div class="form-section-title">📷 Photo de l'Arbitre</div>
       <div class="upload-zone" id="photo-zone">
         <input type="file" id="f-photo" accept="image/*" onchange="previewPhoto(this)">
         <div class="up-icon">📷</div>
@@ -513,8 +419,34 @@
       </div>
     </div>
 
+    <!-- STATS TABLE -->
     <div class="form-card">
-      <div class="form-section-title">📎 Documents Joints — وثائق مرفقة</div>
+      <div class="form-section-title">📊 إحصائيات الحكم — Statistiques Arbitre</div>
+      <p style="font-size:0.8rem;color:#888;margin-bottom:12px;">Autres fonctions au sein de la Fédération (joueur, entraîneur, manager, membre commission, administratif, etc.)</p>
+      <div style="overflow-x:auto;">
+        <table class="stats-table">
+          <thead>
+            <tr>
+              <th>ع/ر</th>
+              <th>الاسم واللقب</th>
+              <th>السن</th>
+              <th>المهنة</th>
+              <th>الدرجة التحكيمية</th>
+              <th>عدد سنوات الخبرة في التحكيم</th>
+              <th>صفة أخرى صلب الجامعة</th>
+              <th>أهم المشاركات — Niveau National</th>
+              <th>أهم المشاركات — Niveau International</th>
+            </tr>
+          </thead>
+          <tbody id="stats-body">
+          </tbody>
+        </table>
+      </div>
+      <button type="button" class="btn btn-secondary btn-sm" style="margin-top:10px" onclick="addStatsRow()">+ Ajouter ligne</button>
+    </div>
+
+    <div class="form-card">
+      <div class="form-section-title">📎 Documents Joints</div>
       <div class="upload-zone">
         <input type="file" id="f-docs" multiple accept=".pdf,.jpg,.jpeg,.png" onchange="previewDocs(this)">
         <div class="up-icon">📎</div>
@@ -526,6 +458,7 @@
     <div class="btn-group no-print">
       <button type="submit" class="btn btn-primary">💾 Enregistrer la Fiche</button>
       <button type="button" class="btn btn-secondary" onclick="resetForm()">🔄 Réinitialiser</button>
+      <button type="button" class="btn btn-success" onclick="exportMyData()" title="Exporter vos données pour les envoyer à l'administrateur">📤 Exporter mes données</button>
     </div>
   </form>
 </div>
@@ -566,6 +499,7 @@
       <button class="btn btn-primary" onclick="saveDocument()">💾 Enregistrer Document</button>
     </div>
   </div>
+
   <div id="docs-list" style="margin-top:20px;">
     <div class="empty-state"><div class="e-icon">📂</div><p>Aucun document enregistré</p></div>
   </div>
@@ -577,7 +511,7 @@
     <div class="admin-gate">
       <div class="lock-icon">🔐</div>
       <h3>Accès Administrateur</h3>
-      <p>Entrez le mot de passe pour accéder au panneau d'administration</p>
+      <p style="font-size:0.82rem;color:#888;margin-bottom:20px">Entrez le mot de passe pour accéder au panneau d'administration</p>
       <input type="password" id="admin-pass" placeholder="••••••••" onkeypress="if(event.key==='Enter')checkAdmin()">
       <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px" onclick="checkAdmin()">🔓 Connexion</button>
     </div>
@@ -586,17 +520,16 @@
   <div id="admin-panel" style="display:none">
     <div class="page-title">
       <div class="icon">⚙️</div>
-      <h2>Panneau Administrateur — لوحة الإدارة</h2>
+      <h2>Panneau Administrateur</h2>
       <button class="btn btn-secondary btn-sm no-print" style="margin-left:auto" onclick="logout()">🚪 Déconnexion</button>
     </div>
 
     <div class="stats-bar" id="admin-stats"></div>
 
     <div class="inner-tabs no-print">
-      <button class="inner-tab active" onclick="showAdminTab('tableau',this)">📊 Tableau</button>
-      <button class="inner-tab" onclick="showAdminTab('fiches',this)">🃏 Fiches</button>
-      <button class="inner-tab" onclick="showAdminTab('admin-docs',this)">📁 Documents</button>
-      <button class="inner-tab" onclick="showAdminTab('reglage',this)">⚙️ Réglages</button>
+      <button class="inner-tab active" onclick="showAdminTab('tableau', this)">📊 Tableau</button>
+      <button class="inner-tab" onclick="showAdminTab('fiches', this)">🃏 Fiches</button>
+      <button class="inner-tab" onclick="showAdminTab('admin-docs', this)">📁 Documents</button>
     </div>
 
     <!-- TABLEAU -->
@@ -607,8 +540,27 @@
           <option value="">Tous les grades</option>
           <option>National</option><option>International</option><option>Régional</option>
         </select>
-        <button class="btn btn-primary btn-sm" onclick="window.print()">🖨️ Imprimer</button>
+        <button class="btn btn-primary btn-sm" onclick="printFiltered('tableau')">🖨️ Imprimer Tableau</button>
         <button class="btn btn-success btn-sm" onclick="exportCSV()">📥 CSV</button>
+        <button class="btn btn-warning btn-sm" onclick="exportPDF()">📄 PDF</button>
+      </div>
+
+      <!-- SYNC NOTICE -->
+      <div style="background:#fff8e1;border:1px solid #f59e0b;border-radius:8px;padding:14px 18px;margin-bottom:16px;display:flex;gap:12px;align-items:flex-start;" class="no-print">
+        <span style="font-size:1.4rem;">⚠️</span>
+        <div>
+          <strong style="color:#b45309;">Synchronisation des inscriptions</strong>
+          <p style="font-size:0.82rem;color:#78350f;margin-top:4px;">
+            Les arbitres s'inscrivent sur <em>leur propre navigateur/appareil</em>. Pour récupérer leurs données ici,
+            demandez-leur d'utiliser le bouton <strong>"📤 Exporter mes données"</strong> en bas de leur formulaire d'inscription,
+            puis importez le fichier JSON ci-dessous.
+          </p>
+          <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+            <button class="btn btn-sm" style="background:#f59e0b;color:white;" onclick="document.getElementById('import-json').click()">📥 Importer données (JSON)</button>
+            <input type="file" id="import-json" accept=".json" style="display:none" onchange="importJSON(this)">
+            <button class="btn btn-secondary btn-sm" onclick="exportFullJSON()">💾 Sauvegarder tout (JSON)</button>
+          </div>
+        </div>
       </div>
       <div class="data-table-wrap" style="overflow-x:auto;">
         <table class="data-table">
@@ -616,7 +568,7 @@
             <tr>
               <th>#</th><th>Photo</th><th>Nom & Prénom</th><th>CIN</th>
               <th>Date Nais.</th><th>Tél</th><th>Club</th><th>Grade</th>
-              <th>Expérience</th><th>Autre Fonction</th><th class="no-print">Actions</th>
+              <th>Profession</th><th class="no-print">Actions</th>
             </tr>
           </thead>
           <tbody id="admin-tbody"></tbody>
@@ -628,7 +580,7 @@
     <div id="tab-fiches" class="docs-section">
       <div class="table-controls no-print">
         <input type="text" id="fiche-search" placeholder="🔍 Rechercher..." oninput="renderFiches()">
-        <button class="btn btn-primary btn-sm" onclick="window.print()">🖨️ Imprimer</button>
+        <button class="btn btn-primary btn-sm" onclick="printFiltered('fiches')">🖨️ Imprimer Fiches</button>
       </div>
       <div class="fiche-grid" id="fiche-grid"></div>
     </div>
@@ -636,69 +588,87 @@
     <!-- DOCUMENTS ADMIN -->
     <div id="tab-admin-docs" class="docs-section">
       <div class="table-controls no-print">
-        <button class="btn btn-primary btn-sm" onclick="window.print()">🖨️ Imprimer</button>
+        <button class="btn btn-primary btn-sm" onclick="printFiltered('docs')">🖨️ Imprimer Documents</button>
       </div>
       <div id="admin-docs-list"></div>
-    </div>
-
-    <!-- RÉGLAGES -->
-    <div id="tab-reglage" class="docs-section">
-      <div class="form-card reglage-section">
-        <div class="form-section-title">🖼️ Logo de la Fédération — شعار الجامعة</div>
-        <p style="font-size:0.82rem;color:#888;margin-bottom:16px">
-          Téléversez le logo officiel. Il sera affiché dans l'écran de démarrage, l'en-tête et sur les fiches imprimées.
-        </p>
-        <div class="upload-zone" id="logo-upload-zone">
-          <input type="file" id="logo-upload" accept="image/*" onchange="uploadLogo(this)">
-          <div class="up-icon">🖼️</div>
-          <p>Glisser-déposer le logo ou cliquer<br><small>JPG, PNG, SVG — recommandé : fond transparent ou circulaire</small></p>
-          <div class="upload-preview" id="logo-preview"></div>
-        </div>
-        <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-          <div id="current-logo-display" style="display:none;align-items:center;gap:12px;padding:12px;background:#f9f9f9;border-radius:8px;border:1px solid #eee">
-            <img id="current-logo-img" src="" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid var(--red)">
-            <span style="font-size:0.82rem;color:#666">Logo actuel</span>
-          </div>
-          <button class="btn btn-secondary btn-sm" onclick="removeLogo()">🗑️ Supprimer le logo</button>
-        </div>
-      </div>
-
-      <div class="form-card reglage-section">
-        <div class="form-section-title">🔑 Changer le Mot de Passe Admin</div>
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Mot de passe actuel</label>
-            <input type="password" id="old-pass" placeholder="••••••••">
-          </div>
-          <div class="form-group">
-            <label>Nouveau mot de passe</label>
-            <input type="password" id="new-pass" placeholder="••••••••">
-          </div>
-          <div class="form-group">
-            <label>Confirmer nouveau mot de passe</label>
-            <input type="password" id="confirm-pass" placeholder="••••••••">
-          </div>
-        </div>
-        <div class="btn-group">
-          <button class="btn btn-primary" onclick="changePassword()">🔑 Modifier le Mot de Passe</button>
-        </div>
-      </div>
-
-      <div class="form-card reglage-section">
-        <div class="form-section-title" style="color:#c0001a">⚠️ Zone Danger — Réinitialisation</div>
-        <p style="font-size:0.82rem;color:#888;margin-bottom:16px">Ces actions sont irréversibles. Procédez avec précaution.</p>
-        <div class="btn-group">
-          <button class="btn btn-warning" onclick="clearAllArbitres()">🗑️ Supprimer tous les arbitres</button>
-          <button class="btn btn-warning" onclick="clearAllDocs()">🗑️ Supprimer tous les documents</button>
-        </div>
-      </div>
     </div>
   </div>
 </div>
 
 </main>
 
-<!-- PRINT HEADER -->
+<!-- ===== MODAL FICHE VIEW ===== -->
+<div id="modal-fiche" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:5000;overflow-y:auto;padding:20px;">
+  <div style="max-width:700px;margin:0 auto;background:white;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.4);">
+    <div id="modal-fiche-header" style="background:linear-gradient(135deg,#1a1a1a,#8b0012);padding:24px;display:flex;align-items:center;gap:16px;color:white;">
+      <div id="modal-photo" style="width:80px;height:80px;border-radius:50%;border:3px solid rgba(255,255,255,0.3);overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:2rem;background:rgba(255,255,255,0.1);">👤</div>
+      <div>
+        <h2 id="modal-nom" style="font-size:1.4rem;"></h2>
+        <p id="modal-grade-club" style="color:#ccc;font-size:0.85rem;"></p>
+        <p id="modal-reg" style="color:#aaa;font-size:0.75rem;"></p>
+      </div>
+      <button onclick="closeModal('modal-fiche')" style="margin-left:auto;background:rgba(255,255,255,0.15);border:none;color:white;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1.1rem;">✕</button>
+    </div>
+    <div id="modal-fiche-body" style="padding:24px;"></div>
+    <div style="padding:16px 24px;border-top:1px solid #f0f0f0;display:flex;gap:10px;flex-wrap:wrap;" class="no-print">
+      <button class="btn btn-primary btn-sm" id="modal-print-btn">🖨️ Imprimer</button>
+      <button class="btn btn-warning btn-sm" id="modal-edit-btn">✏️ Modifier</button>
+      <button class="btn btn-secondary btn-sm" onclick="closeModal('modal-fiche')">✕ Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL EDIT ===== -->
+<div id="modal-edit" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:5001;overflow-y:auto;padding:20px;">
+  <div style="max-width:900px;margin:0 auto;background:white;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.4);">
+    <div style="background:linear-gradient(135deg,#1a1a1a,#8b0012);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;color:white;">
+      <h3 style="font-size:1.1rem;">✏️ Modifier l'arbitre</h3>
+      <button onclick="closeModal('modal-edit')" style="background:rgba(255,255,255,0.15);border:none;color:white;width:32px;height:32px;border-radius:50%;cursor:pointer;">✕</button>
+    </div>
+    <div style="padding:24px;">
+      <input type="hidden" id="edit-id">
+      <div class="form-section-title">👤 Informations Personnelles</div>
+      <div class="form-grid">
+        <div class="form-group"><label>Nom & Prénom *</label><input type="text" id="edit-nom" required></div>
+        <div class="form-group"><label>Date de Naissance</label><input type="date" id="edit-dob"></div>
+        <div class="form-group"><label>Lieu de Naissance</label><input type="text" id="edit-lieu-nais"></div>
+        <div class="form-group"><label>CIN *</label><input type="text" id="edit-cin" required></div>
+        <div class="form-group"><label>Date CIN</label><input type="date" id="edit-cin-date"></div>
+        <div class="form-group"><label>Délivrée à</label><input type="text" id="edit-cin-lieu"></div>
+        <div class="form-group full"><label>Adresse</label><input type="text" id="edit-adresse"></div>
+        <div class="form-group"><label>Code Postal</label><input type="text" id="edit-cp"></div>
+        <div class="form-group"><label>Téléphone</label><input type="tel" id="edit-tel"></div>
+        <div class="form-group"><label>Nationalité</label><input type="text" id="edit-nationalite"></div>
+        <div class="form-group"><label>Profession</label><input type="text" id="edit-profession"></div>
+        <div class="form-group"><label>Club / Association</label><input type="text" id="edit-club"></div>
+        <div class="form-group"><label>Niveau Scolaire</label>
+          <select id="edit-niveau">
+            <option value="">— Choisir —</option>
+            <option>Primaire</option><option>Secondaire</option>
+            <option>Baccalauréat</option><option>Licence</option>
+            <option>Master</option><option>Doctorat</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Début Activité</label><input type="date" id="edit-debut"></div>
+        <div class="form-group"><label>Grade Actuel</label><input type="text" id="edit-grade" placeholder="National, International..."></div>
+        <div class="form-group"><label>Date Grade</label><input type="date" id="edit-grade-date"></div>
+      </div>
+      <div class="form-section-title" style="margin-top:20px;">📷 Changer la Photo</div>
+      <div class="upload-zone" style="max-width:300px;">
+        <input type="file" id="edit-photo" accept="image/*" onchange="previewEditPhoto(this)">
+        <div class="up-icon">📷</div>
+        <p style="font-size:0.8rem;">Laisser vide pour garder la photo actuelle</p>
+        <div id="edit-photo-preview"></div>
+      </div>
+    </div>
+    <div style="padding:16px 24px;border-top:1px solid #f0f0f0;display:flex;gap:10px;">
+      <button class="btn btn-primary" onclick="saveEdit()">💾 Sauvegarder</button>
+      <button class="btn btn-secondary" onclick="closeModal('modal-edit')">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRINT HEADER (visible only on print) -->
 <div class="print-header" id="print-header">
   <div>
     <strong>Fédération Tunisienne de Kick Thai Boxing Savate & DA</strong><br>
@@ -713,102 +683,43 @@
 // ===== DATA STORE =====
 let DB = {
   arbitres: JSON.parse(localStorage.getItem('ktb_arbitres') || '[]'),
-  documents: JSON.parse(localStorage.getItem('ktb_documents') || '[]')
+  documents: JSON.parse(localStorage.getItem('ktb_documents') || '[]'),
+  statsRows: []
 };
-let ADMIN_PASS = localStorage.getItem('ktb_admin_pass') || 'ktb2025admin';
+const ADMIN_PASS = 'ktb2025admin';
 let adminLoggedIn = false;
+let logoDataURL = '';
 
 // ===== SPLASH =====
 window.addEventListener('load', () => {
-  initLogo();
   setTimeout(() => {
     document.getElementById('splash').classList.add('fade-out');
     setTimeout(() => document.getElementById('splash').remove(), 800);
-  }, 3200);
+  }, 3000);
 });
 
-// ===== LOGO =====
+// ===== LOGO (use the uploaded logo from image 3) =====
+// We store it as a placeholder — admin can upload via settings
 function initLogo() {
   const saved = localStorage.getItem('ktb_logo');
-  if(saved) {
-    applyLogo(saved);
+  if (saved) {
+    document.getElementById('splash-logo').src = saved;
+    document.getElementById('splash-logo').style.display = 'block';
+    document.getElementById('splash-placeholder').style.display = 'none';
+    document.getElementById('header-logo').src = saved;
+    document.getElementById('header-logo').style.display = 'block';
+    document.getElementById('header-placeholder').style.display = 'none';
+    logoDataURL = saved;
   }
 }
-
-function applyLogo(dataURL) {
-  const spl = document.getElementById('splash-logo');
-  const splP = document.getElementById('splash-placeholder');
-  const hdr = document.getElementById('header-logo');
-  const hdrP = document.getElementById('header-placeholder');
-  if(spl) { spl.src = dataURL; spl.style.display = 'block'; }
-  if(splP) splP.style.display = 'none';
-  if(hdr) { hdr.src = dataURL; hdr.style.display = 'block'; }
-  if(hdrP) hdrP.style.display = 'none';
-  const cur = document.getElementById('current-logo-img');
-  const curD = document.getElementById('current-logo-display');
-  if(cur) { cur.src = dataURL; }
-  if(curD) curD.style.display = 'flex';
-}
-
-async function uploadLogo(input) {
-  if(!input.files[0]) return;
-  const data = await toBase64(input.files[0]);
-  localStorage.setItem('ktb_logo', data);
-  applyLogo(data);
-  const preview = document.getElementById('logo-preview');
-  preview.innerHTML = `<div class="preview-item"><img src="${data}" alt="Logo"></div>`;
-  toast('Logo mis à jour avec succès !');
-}
-
-function removeLogo() {
-  if(!confirm('Supprimer le logo ?')) return;
-  localStorage.removeItem('ktb_logo');
-  document.getElementById('header-logo').style.display = 'none';
-  document.getElementById('header-placeholder').style.display = 'flex';
-  document.getElementById('current-logo-display').style.display = 'none';
-  document.getElementById('logo-preview').innerHTML = '';
-  toast('Logo supprimé', 'error');
-}
-
-// ===== CHANGE PASSWORD =====
-function changePassword() {
-  const old = document.getElementById('old-pass').value;
-  const nw = document.getElementById('new-pass').value;
-  const cf = document.getElementById('confirm-pass').value;
-  if(old !== ADMIN_PASS) { toast('Mot de passe actuel incorrect', 'error'); return; }
-  if(nw.length < 6) { toast('Nouveau mot de passe trop court (min 6 caractères)', 'error'); return; }
-  if(nw !== cf) { toast('Les mots de passe ne correspondent pas', 'error'); return; }
-  ADMIN_PASS = nw;
-  localStorage.setItem('ktb_admin_pass', nw);
-  document.getElementById('old-pass').value = '';
-  document.getElementById('new-pass').value = '';
-  document.getElementById('confirm-pass').value = '';
-  toast('Mot de passe modifié avec succès !');
-}
-
-// ===== CLEAR DATA =====
-function clearAllArbitres() {
-  if(!confirm('Supprimer TOUS les arbitres ? Cette action est irréversible.')) return;
-  DB.arbitres = [];
-  localStorage.setItem('ktb_arbitres', '[]');
-  renderTable(); renderFiches(); renderAdminStats();
-  toast('Tous les arbitres supprimés', 'error');
-}
-
-function clearAllDocs() {
-  if(!confirm('Supprimer TOUS les documents ? Cette action est irréversible.')) return;
-  DB.documents = [];
-  localStorage.setItem('ktb_documents', '[]');
-  renderAdminDocs(); renderDocsList(); renderAdminStats();
-  toast('Tous les documents supprimés', 'error');
-}
+initLogo();
 
 // ===== NAV =====
-function showSection(id, btn) {
+function showSection(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
   document.getElementById('section-'+id).classList.add('active');
-  if(btn) btn.classList.add('active');
+  event.currentTarget.classList.add('active');
 }
 
 // ===== TOAST =====
@@ -816,7 +727,40 @@ function toast(msg, type='success') {
   const t = document.getElementById('toast');
   t.textContent = (type==='success'?'✓ ':'✕ ') + msg;
   t.className = 'show ' + type;
-  setTimeout(() => t.classList.remove('show'), 3500);
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ===== STATS TABLE =====
+function addStatsRow() {
+  const tbody = document.getElementById('stats-body');
+  const n = tbody.rows.length + 1;
+  const r = tbody.insertRow();
+  r.innerHTML = `
+    <td style="text-align:center;font-weight:700">${String(n).padStart(2,'0')}</td>
+    <td><input type="text" placeholder="Nom"></td>
+    <td><input type="number" placeholder="Age" style="width:60px"></td>
+    <td><input type="text" placeholder="Profession"></td>
+    <td><input type="text" placeholder="Grade"></td>
+    <td><input type="number" placeholder="Années" style="width:70px"></td>
+    <td><input type="text" placeholder="Fonction"></td>
+    <td><input type="text" placeholder="National"></td>
+    <td><input type="text" placeholder="International"></td>
+  `;
+}
+// Add 5 default rows
+for(let i=0;i<5;i++) { addStatsRow(); }
+
+function getStatsData() {
+  const rows = [];
+  document.querySelectorAll('#stats-body tr').forEach(r => {
+    const inputs = r.querySelectorAll('input');
+    if(inputs.length) rows.push({
+      nom: inputs[0].value, age: inputs[1].value, profession: inputs[2].value,
+      grade: inputs[3].value, experience: inputs[4].value, fonction: inputs[5].value,
+      national: inputs[6].value, international: inputs[7].value
+    });
+  });
+  return rows;
 }
 
 // ===== PHOTO PREVIEW =====
@@ -828,7 +772,7 @@ function previewPhoto(input) {
     reader.onload = e => {
       const div = document.createElement('div');
       div.className = 'preview-item';
-      div.innerHTML = `<img src="${e.target.result}" alt="Photo" style="border:3px solid var(--red)">`;
+      div.innerHTML = `<img src="${e.target.result}" alt="Photo">`;
       preview.appendChild(div);
     };
     reader.readAsDataURL(input.files[0]);
@@ -841,7 +785,7 @@ function previewDocs(input) {
   Array.from(input.files).forEach(f => {
     const div = document.createElement('div');
     div.className = 'preview-item';
-    div.innerHTML = `<div style="background:#f0f0f0;padding:8px;border-radius:6px;font-size:0.75rem;max-width:120px;word-break:break-all">📄 ${f.name}</div>`;
+    div.innerHTML = `<div style="background:#f0f0f0;padding:8px;border-radius:6px;font-size:0.75rem;max-width:120px;word-break:break-all">${f.name}</div>`;
     preview.appendChild(div);
   });
 }
@@ -862,7 +806,9 @@ async function saveArbitre(e) {
   e.preventDefault();
   let photoURL = '';
   const photoFile = document.getElementById('f-photo').files[0];
-  if(photoFile) photoURL = await toBase64(photoFile);
+  if(photoFile) {
+    photoURL = await toBase64(photoFile);
+  }
 
   const arbitre = {
     id: Date.now(),
@@ -882,11 +828,8 @@ async function saveArbitre(e) {
     debut: document.getElementById('f-debut').value,
     grade: document.getElementById('f-grade').value,
     gradeDate: document.getElementById('f-grade-date').value,
-    experience: document.getElementById('f-experience').value,
-    autreFonction: document.getElementById('f-autre-fonction').value,
-    partIntl: document.getElementById('f-part-intl').value,
-    partNat: document.getElementById('f-part-nat').value,
     photo: photoURL,
+    stats: getStatsData(),
     createdAt: new Date().toLocaleDateString('fr-FR')
   };
 
@@ -908,6 +851,8 @@ function resetForm() {
   document.getElementById('form-arbitre').reset();
   document.getElementById('photo-preview').innerHTML = '';
   document.getElementById('docs-preview').innerHTML = '';
+  document.getElementById('stats-body').innerHTML = '';
+  for(let i=0;i<5;i++) addStatsRow();
 }
 
 // ===== SAVE DOCUMENT =====
@@ -935,7 +880,7 @@ async function saveDocument() {
 function renderDocsList() {
   const el = document.getElementById('docs-list');
   if(!DB.documents.length) {
-    el.innerHTML = '<div class="empty-state"><div class="e-icon">📂</div><p>Aucun document enregistré</p></div>';
+    el.innerHTML = '<div class="empty-state"><div class="e-icon">📂</div><p>Aucun document</p></div>';
     return;
   }
   el.innerHTML = DB.documents.map(d => `
@@ -971,12 +916,6 @@ function checkAdmin() {
     renderTable();
     renderFiches();
     renderAdminDocs();
-    // Show current logo if any
-    const saved = localStorage.getItem('ktb_logo');
-    if(saved) {
-      document.getElementById('current-logo-img').src = saved;
-      document.getElementById('current-logo-display').style.display = 'flex';
-    }
   } else {
     toast('Mot de passe incorrect', 'error');
   }
@@ -997,6 +936,215 @@ function showAdminTab(id, btn) {
   if(id==='tableau') renderTable();
   if(id==='fiches') renderFiches();
   if(id==='admin-docs') renderAdminDocs();
+}
+
+// ===== MODAL HELPERS =====
+function closeModal(id) {
+  document.getElementById(id).style.display = 'none';
+}
+document.addEventListener('click', function(e) {
+  ['modal-fiche','modal-edit'].forEach(id => {
+    const m = document.getElementById(id);
+    if(m && e.target === m) m.style.display = 'none';
+  });
+});
+
+// ===== VIEW FICHE MODAL =====
+function viewFicheModal(id) {
+  const a = DB.arbitres.find(x => x.id === id);
+  if(!a) return;
+
+  // Header
+  const photoEl = document.getElementById('modal-photo');
+  if(a.photo) {
+    photoEl.innerHTML = `<img src="${a.photo}" style="width:100%;height:100%;object-fit:cover;">`;
+  } else {
+    photoEl.innerHTML = '👤';
+  }
+  document.getElementById('modal-nom').textContent = a.nom;
+  document.getElementById('modal-grade-club').textContent = `${a.grade||'—'} ${a.club ? '— '+a.club : ''}`;
+  document.getElementById('modal-reg').textContent = `Enregistré le ${a.createdAt}`;
+
+  // Body
+  const fields = [
+    ['CIN', `${a.cin}${a.cinDate?' — '+new Date(a.cinDate).toLocaleDateString('fr-FR'):''}${a.cinLieu?' — '+a.cinLieu:''}`],
+    ['Date de Naissance', a.dob ? new Date(a.dob).toLocaleDateString('fr-FR') : '—'],
+    ['Lieu de Naissance', a.lieuNais||'—'],
+    ['Adresse', `${a.adresse||'—'}${a.cp?' — CP: '+a.cp:''}`],
+    ['Téléphone', a.tel||'—'],
+    ['Nationalité', a.nationalite||'—'],
+    ['Profession', a.profession||'—'],
+    ['Niveau Scolaire', a.niveau||'—'],
+    ['Début Activité', a.debut ? new Date(a.debut).toLocaleDateString('fr-FR') : '—'],
+    ['Grade', `${a.grade||'—'}${a.gradeDate?' — '+new Date(a.gradeDate).toLocaleDateString('fr-FR'):''}`],
+  ];
+  let html = `<table style="width:100%;border-collapse:collapse;font-size:0.85rem;">`;
+  fields.forEach(([k,v]) => {
+    html += `<tr>
+      <td style="padding:9px 12px;font-weight:600;background:#fff5f6;color:#888;width:38%;border:1px solid #f0f0f0;font-size:0.78rem;">${k}</td>
+      <td style="padding:9px 12px;border:1px solid #f0f0f0;">${v}</td>
+    </tr>`;
+  });
+  html += '</table>';
+  if(a.stats && a.stats.some(s=>s.nom)) {
+    html += `<div style="margin-top:16px;background:var(--red);color:white;padding:8px 12px;font-weight:700;font-size:0.85rem;border-radius:4px 4px 0 0;">Statistiques</div>
+    <div style="overflow-x:auto;"><table class="stats-table">
+      <thead><tr><th>ع/ر</th><th>الاسم</th><th>السن</th><th>المهنة</th><th>الدرجة</th><th>الخبرة</th><th>الصفة</th><th>National</th><th>International</th></tr></thead>
+      <tbody>${a.stats.filter(s=>s.nom).map((s,i)=>`<tr>
+        <td style="text-align:center">${String(i+1).padStart(2,'0')}</td>
+        <td>${s.nom}</td><td>${s.age}</td><td>${s.profession}</td>
+        <td>${s.grade}</td><td>${s.experience}</td><td>${s.fonction}</td>
+        <td>${s.national}</td><td>${s.international}</td>
+      </tr>`).join('')}</tbody>
+    </table></div>`;
+  }
+  document.getElementById('modal-fiche-body').innerHTML = html;
+
+  // Buttons
+  document.getElementById('modal-print-btn').onclick = () => printSingleFiche(id);
+  document.getElementById('modal-edit-btn').onclick = () => { closeModal('modal-fiche'); openEdit(id); };
+
+  document.getElementById('modal-fiche').style.display = 'block';
+}
+
+// ===== EDIT ARBITRE =====
+function openEdit(id) {
+  const a = DB.arbitres.find(x => x.id === id);
+  if(!a) return;
+  document.getElementById('edit-id').value = id;
+  document.getElementById('edit-nom').value = a.nom||'';
+  document.getElementById('edit-dob').value = a.dob||'';
+  document.getElementById('edit-lieu-nais').value = a.lieuNais||'';
+  document.getElementById('edit-cin').value = a.cin||'';
+  document.getElementById('edit-cin-date').value = a.cinDate||'';
+  document.getElementById('edit-cin-lieu').value = a.cinLieu||'';
+  document.getElementById('edit-adresse').value = a.adresse||'';
+  document.getElementById('edit-cp').value = a.cp||'';
+  document.getElementById('edit-tel').value = a.tel||'';
+  document.getElementById('edit-nationalite').value = a.nationalite||'';
+  document.getElementById('edit-profession').value = a.profession||'';
+  document.getElementById('edit-club').value = a.club||'';
+  document.getElementById('edit-niveau').value = a.niveau||'';
+  document.getElementById('edit-debut').value = a.debut||'';
+  document.getElementById('edit-grade').value = a.grade||'';
+  document.getElementById('edit-grade-date').value = a.gradeDate||'';
+
+  // Show current photo
+  const prev = document.getElementById('edit-photo-preview');
+  prev.innerHTML = a.photo ? `<img src="${a.photo}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:2px solid #ddd;margin-top:8px;">` : '';
+
+  document.getElementById('modal-edit').style.display = 'block';
+}
+
+function previewEditPhoto(input) {
+  const prev = document.getElementById('edit-photo-preview');
+  if(input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      prev.innerHTML = `<img src="${e.target.result}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:2px solid #c0001a;margin-top:8px;">`;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+async function saveEdit() {
+  const id = parseInt(document.getElementById('edit-id').value);
+  const idx = DB.arbitres.findIndex(x => x.id === id);
+  if(idx === -1) return;
+
+  const photoFile = document.getElementById('edit-photo').files[0];
+  let photoURL = DB.arbitres[idx].photo; // keep existing
+  if(photoFile) photoURL = await toBase64(photoFile);
+
+  DB.arbitres[idx] = {
+    ...DB.arbitres[idx],
+    nom: document.getElementById('edit-nom').value,
+    dob: document.getElementById('edit-dob').value,
+    lieuNais: document.getElementById('edit-lieu-nais').value,
+    cin: document.getElementById('edit-cin').value,
+    cinDate: document.getElementById('edit-cin-date').value,
+    cinLieu: document.getElementById('edit-cin-lieu').value,
+    adresse: document.getElementById('edit-adresse').value,
+    cp: document.getElementById('edit-cp').value,
+    tel: document.getElementById('edit-tel').value,
+    nationalite: document.getElementById('edit-nationalite').value,
+    profession: document.getElementById('edit-profession').value,
+    club: document.getElementById('edit-club').value,
+    niveau: document.getElementById('edit-niveau').value,
+    debut: document.getElementById('edit-debut').value,
+    grade: document.getElementById('edit-grade').value,
+    gradeDate: document.getElementById('edit-grade-date').value,
+    photo: photoURL,
+    updatedAt: new Date().toLocaleDateString('fr-FR')
+  };
+
+  localStorage.setItem('ktb_arbitres', JSON.stringify(DB.arbitres));
+  closeModal('modal-edit');
+  renderTable();
+  renderFiches();
+  renderAdminStats();
+  toast('Arbitre modifié avec succès !');
+  // reset photo input
+  document.getElementById('edit-photo').value = '';
+}
+
+// ===== EXPORT PDF =====
+function exportPDF() {
+  const data = filterArbitres();
+  const w = window.open('', '_blank');
+  const rows = data.map((a,i) => `
+    <tr>
+      <td style="text-align:center">${i+1}</td>
+      <td>${a.photo ? `<img src="${a.photo}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;">` : '👤'}</td>
+      <td><strong>${a.nom}</strong></td>
+      <td>${a.cin}</td>
+      <td>${a.dob ? new Date(a.dob).toLocaleDateString('fr-FR') : '—'}</td>
+      <td>${a.tel||'—'}</td>
+      <td>${a.club||'—'}</td>
+      <td><span style="background:${a.grade==='International'?'#e0f2fe':'#ffeaed'};color:${a.grade==='International'?'#0369a1':'#c0001a'};padding:2px 8px;border-radius:12px;font-size:0.75rem;font-weight:700;">${a.grade||'—'}</span></td>
+      <td>${a.profession||'—'}</td>
+    </tr>
+  `).join('');
+
+  w.document.write(`<!DOCTYPE html><html><head>
+    <meta charset="UTF-8">
+    <title>Liste Arbitres KTB — ${new Date().toLocaleDateString('fr-FR')}</title>
+    <style>
+      body{font-family:Segoe UI,sans-serif;padding:24px;color:#1a1a1a;font-size:12px;}
+      .header{display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid #c0001a;padding-bottom:12px;margin-bottom:16px;}
+      .header h1{font-size:1rem;color:#c0001a;}
+      .header p{font-size:0.72rem;color:#666;}
+      .meta{margin-bottom:12px;font-size:0.78rem;color:#888;}
+      table{width:100%;border-collapse:collapse;font-size:11px;}
+      th{background:#1a1a1a;color:white;padding:8px 6px;text-align:left;font-size:10px;}
+      td{padding:7px 6px;border-bottom:1px solid #f0f0f0;vertical-align:middle;}
+      tr:nth-child(even) td{background:#fafafa;}
+      .footer{margin-top:20px;text-align:center;font-size:0.7rem;color:#aaa;border-top:1px solid #ddd;padding-top:8px;}
+    </style>
+  </head><body>
+    <div class="header">
+      <div>
+        <h1>🥊 Fédération Tunisienne de Kick Thai Boxing Savate & DA</h1>
+        <p>الجامعة التونسية للكيك و التاي بوكسينغ</p>
+        <p>28, rue des Glycines Boulevard Le Bardo 2000 | federationtktbsda@gmail.com | (00216) 71 501 860</p>
+      </div>
+      <div style="text-align:right;">
+        <strong style="font-size:0.9rem;">Liste des Arbitres</strong><br>
+        <span style="color:#888;font-size:0.75rem;">Imprimé le ${new Date().toLocaleDateString('fr-FR')}</span>
+      </div>
+    </div>
+    <div class="meta">Total : <strong>${data.length}</strong> arbitre(s) — Saison 2025/2026</div>
+    <table>
+      <thead><tr>
+        <th>#</th><th>Photo</th><th>Nom & Prénom</th><th>CIN</th>
+        <th>Date Nais.</th><th>Tél</th><th>Club</th><th>Grade</th><th>Profession</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div class="footer">Fédération Tunisienne de Kick Thai Boxing — Document généré automatiquement</div>
+  </body></html>`);
+  w.document.close();
+  setTimeout(() => { w.print(); }, 500);
 }
 
 function renderAdminStats() {
@@ -1022,7 +1170,7 @@ function renderTable() {
   const data = filterArbitres();
   const tbody = document.getElementById('admin-tbody');
   if(!data.length) {
-    tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:40px;color:#aaa">Aucun arbitre trouvé</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:40px;color:#aaa">Aucun arbitre trouvé</td></tr>`;
     return;
   }
   tbody.innerHTML = data.map((a,i) => `
@@ -1032,13 +1180,13 @@ function renderTable() {
       <td><strong>${a.nom}</strong></td>
       <td>${a.cin}</td>
       <td>${a.dob ? new Date(a.dob).toLocaleDateString('fr-FR') : ''}</td>
-      <td>${a.tel||'—'}</td>
-      <td>${a.club||'—'}</td>
+      <td>${a.tel}</td>
+      <td>${a.club}</td>
       <td><span class="badge ${a.grade==='International'?'nat':''}">${a.grade||'—'}</span></td>
-      <td>${a.experience ? a.experience+' ans' : '—'}</td>
-      <td>${a.autreFonction||'—'}</td>
+      <td>${a.profession}</td>
       <td class="no-print">
-        <button class="btn btn-warning btn-sm" onclick="printSingleFiche(${a.id})">🖨️</button>
+        <button class="btn btn-warning btn-sm" onclick="viewFicheModal(${a.id})">👁️</button>
+        <button class="btn btn-primary btn-sm" onclick="openEdit(${a.id})">✏️</button>
         <button class="btn btn-secondary btn-sm" onclick="deleteArbitre(${a.id})">🗑️</button>
       </td>
     </tr>
@@ -1067,16 +1215,16 @@ function renderFiches() {
         <div class="fiche-row"><span>CIN</span><span>${a.cin}</span></div>
         <div class="fiche-row"><span>Né(e) le</span><span>${a.dob ? new Date(a.dob).toLocaleDateString('fr-FR') : '—'} ${a.lieuNais ? 'à '+a.lieuNais : ''}</span></div>
         <div class="fiche-row"><span>Téléphone</span><span>${a.tel||'—'}</span></div>
+        <div class="fiche-row"><span>Adresse</span><span>${a.adresse||'—'}</span></div>
         <div class="fiche-row"><span>Profession</span><span>${a.profession||'—'}</span></div>
-        <div class="fiche-row"><span>Grade</span><span>${a.grade||'—'}</span></div>
-        <div class="fiche-row"><span>Expérience</span><span>${a.experience ? a.experience+' ans' : '—'}</span></div>
-        <div class="fiche-row"><span>Autre fonction</span><span>${a.autreFonction||'—'}</span></div>
-        <div class="fiche-row"><span>Part. Internationales</span><span style="font-size:0.75rem">${a.partIntl||'—'}</span></div>
-        <div class="fiche-row"><span>Part. Nationales</span><span style="font-size:0.75rem">${a.partNat||'—'}</span></div>
+        <div class="fiche-row"><span>Nationalité</span><span>${a.nationalite||'—'}</span></div>
+        <div class="fiche-row"><span>Niveau</span><span>${a.niveau||'—'}</span></div>
+        <div class="fiche-row"><span>Début activité</span><span>${a.debut ? new Date(a.debut).toLocaleDateString('fr-FR') : '—'}</span></div>
+        <div class="fiche-row"><span>Grade / Date</span><span>${a.grade||'—'} ${a.gradeDate ? '— '+new Date(a.gradeDate).toLocaleDateString('fr-FR') : ''}</span></div>
       </div>
       <div class="fiche-actions no-print">
         <button class="btn btn-primary btn-sm" onclick="printSingleFiche(${a.id})">🖨️ Imprimer</button>
-        <button class="btn btn-secondary btn-sm" onclick="deleteArbitre(${a.id})">🗑️</button>
+        <button class="btn btn-secondary btn-sm" onclick="deleteArbitre(${a.id})">🗑️ Supprimer</button>
       </div>
     </div>
   `).join('');
@@ -1097,7 +1245,7 @@ function renderAdminDocs() {
         ${d.fileName ? `<span style="font-size:0.75rem;color:#aaa;margin-left:8px">📄 ${d.fileName}</span>` : ''}
       </div>
       <div class="no-print" style="display:flex;gap:8px">
-        ${d.fileData ? `<button class="btn btn-success btn-sm" onclick="downloadDoc(${d.id})">⬇️</button>` : ''}
+        ${d.fileData ? `<button class="btn btn-success btn-sm" onclick="downloadDoc(${d.id})">⬇️ Télécharger</button>` : ''}
         <button class="btn btn-secondary btn-sm" onclick="deleteDocAdmin(${d.id})">🗑️</button>
       </div>
     </div>
@@ -1132,120 +1280,176 @@ function deleteArbitre(id) {
   toast('Arbitre supprimé', 'error');
 }
 
-// ===== PRINT SINGLE FICHE =====
+// ===== PRINT =====
+function printFiltered(type) {
+  document.getElementById('print-date').textContent = 'Imprimé le ' + new Date().toLocaleDateString('fr-FR');
+  window.print();
+}
+
 function printSingleFiche(id) {
   const a = DB.arbitres.find(x => x.id === id);
   if(!a) return;
-  const logo = localStorage.getItem('ktb_logo') || '';
   const w = window.open('', '_blank');
-  w.document.write(`<!DOCTYPE html><html><head>
-  <meta charset="UTF-8"><title>Fiche Arbitre — ${a.nom}</title>
-  <style>
-    body{font-family:Segoe UI,sans-serif;padding:30px;color:#1a1a1a;font-size:13px}
-    .fed-header{display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid #c0001a;padding-bottom:16px;margin-bottom:20px}
-    .fed-header .fed-info{text-align:center;flex:1}
-    .fed-header h2{color:#c0001a;font-size:13px;margin:3px 0}
-    .fed-header p{color:#666;font-size:11px;margin:2px 0}
-    .fed-header img{width:75px;height:75px;border-radius:50%;object-fit:cover;border:3px solid #c0001a}
-    .logo-placeholder{width:75px;height:75px;border-radius:50%;background:#c0001a;display:flex;align-items:center;justify-content:center;font-size:2rem}
-    .person-header{display:flex;align-items:center;gap:20px;background:linear-gradient(135deg,#1a1a1a,#2a0005);color:white;padding:16px 20px;border-radius:10px;margin-bottom:16px}
-    .person-header img{width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid #c0001a}
-    .person-header h1{font-size:1.2rem;color:white;margin:0 0 4px}
-    .person-header p{font-size:11px;color:#ccc;margin:2px 0}
-    .section-title{background:#c0001a;color:white;padding:6px 14px;font-weight:700;font-size:12px;margin:16px 0 0;border-radius:4px 4px 0 0}
-    table{width:100%;border-collapse:collapse;font-size:12px}
-    td{padding:7px 12px;border:1px solid #e0e0e0}
-    td:first-child{font-weight:600;background:#fff5f6;width:38%;color:#555}
-    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-    .info-box{background:#f9f9f9;border:1px solid #e0e0e0;border-radius:6px;padding:10px}
-    .info-box h4{color:#c0001a;font-size:11px;margin:0 0 5px;border-bottom:1px solid #ffd0d7;padding-bottom:4px}
-    .info-box p{font-size:11px;color:#444;line-height:1.5;margin:0}
-    .footer{margin-top:30px;display:flex;justify-content:space-between}
-    .sig-box{border-top:1px solid #999;padding-top:8px;text-align:center;min-width:180px;font-size:11px}
-    .contact-footer{text-align:center;font-size:10px;color:#aaa;margin-top:20px;border-top:1px solid #eee;padding-top:10px}
-  </style></head><body>
-  <div class="fed-header">
-    <div style="width:100px;display:flex;justify-content:flex-start">
-      ${logo ? `<img src="${logo}" alt="Logo">` : '<div class="logo-placeholder">🥊</div>'}
-    </div>
-    <div class="fed-info">
+  w.document.write(`
+    <!DOCTYPE html><html><head>
+    <meta charset="UTF-8">
+    <title>Fiche Arbitre — ${a.nom}</title>
+    <style>
+      body{font-family:Segoe UI,sans-serif;padding:30px;color:#1a1a1a}
+      .header{display:flex;align-items:center;gap:20px;border-bottom:3px solid #c0001a;padding-bottom:16px;margin-bottom:20px}
+      .header img{width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid #c0001a}
+      .header .info h1{font-size:1.4rem;color:#c0001a}
+      .header .info p{color:#666;font-size:0.85rem}
+      .fed{text-align:center;margin-bottom:20px}
+      .fed h2{color:#c0001a;font-size:1rem}
+      .fed p{font-size:0.75rem;color:#888}
+      table{width:100%;border-collapse:collapse;margin-top:12px;font-size:0.85rem}
+      td{padding:8px 12px;border:1px solid #ddd} td:first-child{font-weight:600;background:#fff5f6;width:35%}
+      .section-title{background:#c0001a;color:white;padding:6px 12px;font-weight:700;font-size:0.85rem;margin-top:16px}
+      .footer{margin-top:40px;display:flex;justify-content:space-between;font-size:0.8rem}
+      .sig-box{border-top:1px solid #888;padding-top:8px;text-align:center;min-width:180px}
+    </style>
+    </head><body>
+    <div class="fed">
       <h2>الجمهورية التونسية — République Tunisienne</h2>
-      <p>وزارة الشباب والرياضة — Ministère de la Jeunesse et des Sports</p>
-      <h2>الجامعة التونسية للكيك و التاي بوكسينغ السافات و الأنشطة التابعة</h2>
+      <p>Ministère de la Jeunesse et des Sports</p>
+      <h2>الجامعة التونسية للكيك و التاي بوكسينغ</h2>
       <p>Fédération Tunisienne de Kick Thai Boxing Savate & DA</p>
-      <p style="font-weight:700;color:#c0001a;margin-top:4px">بطـاقة إرشـادات حكـم — Saison 2025/2026</p>
+      <p>بطـــاقة إرشـــادات حكـم — Saison 2025/2026</p>
     </div>
-    <div style="width:100px"></div>
-  </div>
-
-  <div class="person-header">
-    ${a.photo ? `<img src="${a.photo}" alt="">` : '<div style="width:80px;height:80px;border-radius:50%;background:#444;display:flex;align-items:center;justify-content:center;font-size:2rem">👤</div>'}
-    <div>
-      <h1>${a.nom}</h1>
-      <p>Grade : <strong>${a.grade||'—'}</strong> | Club : <strong>${a.club||'—'}</strong></p>
-      <p>Enregistré le : ${a.createdAt}</p>
+    <div class="header">
+      ${a.photo ? `<img src="${a.photo}" alt="">` : '<div style="width:80px;height:80px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:2rem">👤</div>'}
+      <div class="info">
+        <h1>${a.nom}</h1>
+        <p>Grade : ${a.grade||'—'} | Club : ${a.club||'—'}</p>
+        <p>Enregistré le ${a.createdAt}</p>
+      </div>
     </div>
-  </div>
-
-  <div class="section-title">Informations Personnelles — المعلومات الشخصية</div>
-  <table>
-    <tr><td>الاسم واللقب / Nom Prénom</td><td>${a.nom}</td></tr>
-    <tr><td>تاريخ الولادة / Date Naissance</td><td>${a.dob ? new Date(a.dob).toLocaleDateString('fr-FR') : '—'} ${a.lieuNais ? '— à '+a.lieuNais : ''}</td></tr>
-    <tr><td>رقم بطاقة التعريف / CIN</td><td>${a.cin}${a.cinDate ? ' — '+new Date(a.cinDate).toLocaleDateString('fr-FR') : ''}${a.cinLieu ? ' — '+a.cinLieu : ''}</td></tr>
-    <tr><td>العنوان / Adresse</td><td>${a.adresse||'—'}${a.cp ? ' — CP: '+a.cp : ''}</td></tr>
-    <tr><td>الهاتف / Téléphone</td><td>${a.tel||'—'}</td></tr>
-    <tr><td>الجنسية / Nationalité</td><td>${a.nationalite||'—'}</td></tr>
-    <tr><td>المهنة / Profession</td><td>${a.profession||'—'}</td></tr>
-    <tr><td>الجمعية / Club</td><td>${a.club||'—'}</td></tr>
-    <tr><td>المستوى الثقافي / Niveau scolaire</td><td>${a.niveau||'—'}</td></tr>
-    <tr><td>تاريخ بداية النشاط / Début activité</td><td>${a.debut ? new Date(a.debut).toLocaleDateString('fr-FR') : '—'}</td></tr>
-    <tr><td>التصنيف الحالي / Grade actuel</td><td>${a.grade||'—'}${a.gradeDate ? ' — '+new Date(a.gradeDate).toLocaleDateString('fr-FR') : ''}</td></tr>
-  </table>
-
-  <div class="section-title">Expérience & Participations — الخبرة والمشاركات</div>
-  <table>
-    <tr><td>عدد سنوات الخبرة / Années d'expérience</td><td>${a.experience ? a.experience+' ans / سنوات' : '—'}</td></tr>
-    <tr><td>صفة أخرى صلب الجامعة / Autre fonction</td><td>${a.autreFonction||'—'}</td></tr>
-  </table>
-  <div class="two-col" style="margin-top:8px">
-    <div class="info-box">
-      <h4>🌍 أهم المشاركات الدولية — Participations Internationales</h4>
-      <p>${(a.partIntl||'—').replace(/\n/g,'<br>')}</p>
+    <div class="section-title">Informations Personnelles — المعلومات الشخصية</div>
+    <table>
+      <tr><td>الاسم واللقب / Nom Prénom</td><td>${a.nom}</td></tr>
+      <tr><td>تاريخ الولادة / Date Naissance</td><td>${a.dob ? new Date(a.dob).toLocaleDateString('fr-FR') : '—'}</td></tr>
+      <tr><td>مكانها / Lieu Naissance</td><td>${a.lieuNais||'—'}</td></tr>
+      <tr><td>رقم بطاقة التعريف / CIN</td><td>${a.cin} — ${a.cinDate ? new Date(a.cinDate).toLocaleDateString('fr-FR') : ''} — ${a.cinLieu||''}</td></tr>
+      <tr><td>العنوان / Adresse</td><td>${a.adresse||'—'} ${a.cp ? '— CP: '+a.cp : ''}</td></tr>
+      <tr><td>الهاتف / Téléphone</td><td>${a.tel||'—'}</td></tr>
+      <tr><td>الجنسية / Nationalité</td><td>${a.nationalite||'—'}</td></tr>
+      <tr><td>المهنة / Profession</td><td>${a.profession||'—'}</td></tr>
+      <tr><td>الجمعية / Club</td><td>${a.club||'—'}</td></tr>
+      <tr><td>المستوى الثقافي / Niveau</td><td>${a.niveau||'—'}</td></tr>
+      <tr><td>تاريخ بداية النشاط / Début</td><td>${a.debut ? new Date(a.debut).toLocaleDateString('fr-FR') : '—'}</td></tr>
+      <tr><td>التصنيف الحالي / Grade</td><td>${a.grade||'—'} — ${a.gradeDate ? new Date(a.gradeDate).toLocaleDateString('fr-FR') : ''}</td></tr>
+    </table>
+    ${a.stats && a.stats.some(s=>s.nom) ? `
+    <div class="section-title" style="margin-top:20px">Statistiques — إحصائيات</div>
+    <table>
+      <tr style="background:#c0001a;color:white">
+        <th>ع/ر</th><th>الاسم</th><th>السن</th><th>المهنة</th><th>الدرجة</th>
+        <th>الخبرة</th><th>الصفة</th><th>National</th><th>International</th>
+      </tr>
+      ${a.stats.filter(s=>s.nom).map((s,i) => `
+        <tr>
+          <td style="text-align:center">${String(i+1).padStart(2,'0')}</td>
+          <td>${s.nom}</td><td>${s.age}</td><td>${s.profession}</td>
+          <td>${s.grade}</td><td>${s.experience}</td><td>${s.fonction}</td>
+          <td>${s.national}</td><td>${s.international}</td>
+        </tr>
+      `).join('')}
+    </table>` : ''}
+    <p style="margin-top:20px;font-size:0.85rem"><strong>أشهد أن المعلومات الواردة بهذه البطاقة صحيحة.</strong></p>
+    <div class="footer">
+      <div class="sig-box">الإمضاء<br><br>الإمضاء</div>
+      <div class="sig-box">إمضاء رئيس الجمعية / النادي</div>
     </div>
-    <div class="info-box">
-      <h4>🏆 أهم المشاركات الوطنية — Participations Nationales</h4>
-      <p>${(a.partNat||'—').replace(/\n/g,'<br>')}</p>
-    </div>
-  </div>
-
-  <p style="margin-top:20px;font-size:12px"><strong>أشهد أن المعلومات الواردة بهذه البطاقة صحيحة.</strong></p>
-  <div class="footer">
-    <div class="sig-box">إمضاء الحكم<br><br><br></div>
-    <div class="sig-box">إمضاء رئيس الجمعية / النادي<br><br><br></div>
-    <div class="sig-box">ختم الجامعة<br><br><br></div>
-  </div>
-  <div class="contact-footer">
-    28, rue des Glycines Boulevard Le Bardo 2000 | federationtktbsda@gmail.com | (00216) 71 501 860
-  </div>
-  </body></html>`);
+    <p style="text-align:center;font-size:0.72rem;color:#aaa;margin-top:30px;border-top:1px solid #ddd;padding-top:10px">
+      28, rue des Glycines Boulevard Le Bardo 2000 | federationtktbsda@gmail.com | (00216) 71 501 860
+    </p>
+    </body></html>
+  `);
   w.document.close();
-  setTimeout(() => w.print(), 600);
+  setTimeout(() => w.print(), 500);
+}
+
+// ===== EXPORT MY DATA (for referee to send to admin) =====
+function exportMyData() {
+  const data = DB.arbitres;
+  if(!data.length) { toast('Aucune fiche enregistrée', 'error'); return; }
+  const json = JSON.stringify({ arbitres: data, exportedAt: new Date().toISOString() }, null, 2);
+  const blob = new Blob([json], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `fiche_arbitre_${data[0]?.nom?.replace(/\s+/g,'_')||'export'}_${Date.now()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('Fichier exporté — envoyez-le à l\'administrateur');
+}
+
+// ===== EXPORT FULL JSON (admin backup) =====
+function exportFullJSON() {
+  const json = JSON.stringify({ arbitres: DB.arbitres, documents: DB.documents, exportedAt: new Date().toISOString() }, null, 2);
+  const blob = new Blob([json], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `ktb_backup_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('Sauvegarde exportée');
+}
+
+// ===== IMPORT JSON (admin collects from referees) =====
+function importJSON(input) {
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      let newCount = 0;
+      const toImport = data.arbitres || (Array.isArray(data) ? data : []);
+      toImport.forEach(a => {
+        // Avoid duplicates by CIN
+        if(!DB.arbitres.find(x => x.cin === a.cin)) {
+          if(!a.id) a.id = Date.now() + Math.random();
+          DB.arbitres.push(a);
+          newCount++;
+        }
+      });
+      // Also import documents if present
+      if(data.documents) {
+        data.documents.forEach(d => {
+          if(!DB.documents.find(x => x.id === d.id)) {
+            DB.documents.push(d);
+          }
+        });
+        localStorage.setItem('ktb_documents', JSON.stringify(DB.documents));
+        renderAdminDocs();
+      }
+      localStorage.setItem('ktb_arbitres', JSON.stringify(DB.arbitres));
+      renderTable(); renderFiches(); renderAdminStats();
+      toast(`${newCount} arbitre(s) importé(s) avec succès !`);
+    } catch(err) {
+      toast('Fichier JSON invalide', 'error');
+    }
+    input.value = '';
+  };
+  reader.readAsText(file);
 }
 
 // ===== EXPORT CSV =====
 function exportCSV() {
   const data = filterArbitres();
-  const headers = ['Nom','CIN','Date Naissance','Lieu Naissance','Téléphone','Adresse','CP','Nationalité','Profession','Club','Niveau','Début Activité','Grade','Date Grade','Expérience (ans)','Autre Fonction','Participations Internationales','Participations Nationales','Date Enregistrement'];
+  const headers = ['Nom','CIN','Date Naissance','Lieu Naissance','Téléphone','Adresse','CP','Nationalité','Profession','Club','Niveau','Début Activité','Grade','Date Grade','Date Enregistrement'];
   const rows = data.map(a => [
     a.nom, a.cin, a.dob, a.lieuNais, a.tel, a.adresse, a.cp,
-    a.nationalite, a.profession, a.club, a.niveau, a.debut,
-    a.grade, a.gradeDate, a.experience, a.autreFonction, a.partIntl, a.partNat, a.createdAt
+    a.nationalite, a.profession, a.club, a.niveau, a.debut, a.grade, a.gradeDate, a.createdAt
   ].map(v => `"${(v||'').replace(/"/g,'""')}"`).join(','));
   const csv = [headers.join(','), ...rows].join('\n');
   const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = 'arbitres_ktb_'+new Date().toLocaleDateString('fr-FR').replace(/\//g,'-')+'.csv'; a.click();
+  a.href = url; a.download = 'arbitres_ktb.csv'; a.click();
   URL.revokeObjectURL(url);
 }
 </script>
