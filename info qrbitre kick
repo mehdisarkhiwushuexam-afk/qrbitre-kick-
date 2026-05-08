@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fédération Tunisienne de Kick Thai Boxing - Gestion Arbitres</title>
+<style>
+  :root {
+    --red: #c0001a;
+    --dark-red: #8b0012;
+    --light-red: #e8001f;
+    --white: #ffffff;
+    --gray: #f5f5f5;
+    --dark: #1a1a1a;
+    --mid: #444;
+    --border: #ddd;
+    --shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:#f0f0f0; color:var(--dark); }
+
+  /* SPLASH */
+  #splash {
+    position:fixed; inset:0; background:#0a0a0a;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    z-index:9999; transition:opacity 0.8s ease;
+  }
+  #splash.fade-out { opacity:0; pointer-events:none; }
+  .logo-wrap { position:relative; width:220px; height:220px; }
+  .logo-wrap img { width:100%; height:100%; border-radius:50%; object-fit:cover; }
+  .logo-glow {
+    position:absolute; inset:-20px; border-radius:50%;
+    background:radial-gradient(circle, rgba(192,0,26,0.8) 0%, rgba(192,0,26,0.3) 40%, transparent 70%);
+    animation:pulse 2s ease-in-out infinite;
+  }
+  .logo-ring {
+    position:absolute; inset:-8px; border-radius:50%;
+    border:3px solid var(--red); opacity:0;
+    animation:ring-expand 2s ease-out infinite;
+  }
+  .logo-ring2 {
+    position:absolute; inset:-8px; border-radius:50%;
+    border:2px solid rgba(192,0,26,0.5); opacity:0;
+    animation:ring-expand 2s ease-out 0.7s infinite;
+  }
+  .logo-ring3 {
+    position:absolute; inset:-8px; border-radius:50%;
+    border:1px solid rgba(192,0,26,0.3); opacity:0;
+    animation:ring-expand 2s ease-out 1.4s infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1);opacity:0.7} 50%{transform:scale(1.12);opacity:1} }
+  @keyframes ring-expand { 0%{transform:scale(1);opacity:0.9} 100%{transform:scale(2.2);opacity:0} }
+  .splash-title {
+    margin-top:28px; color:white; text-align:center;
+    animation:fadeInUp 1s ease 0.5s both;
+  }
+  .splash-title h1 { font-size:1.3rem; color:#ff2040; letter-spacing:2px; font-weight:800; text-shadow:0 0 20px rgba(192,0,26,0.8); }
+  .splash-title h2 { font-size:0.9rem; color:white; margin-top:6px; letter-spacing:1px; }
+  .splash-title p { font-size:0.78rem; color:#aaa; margin-top:4px; }
+  .splash-bar {
+    margin-top:28px; width:280px; height:4px; background:#222; border-radius:2px; overflow:hidden;
+    animation:fadeInUp 1s ease 0.8s both;
+  }
+  .splash-bar-fill {
+    height:100%; background:linear-gradient(90deg, var(--dark-red), var(--light-red), var(--dark-red));
+    background-size:200% 100%;
+    border-radius:2px; animation:load-bar 2.8s ease forwards, shimmer 1s linear infinite;
+  }
+  @keyframes load-bar { 0%{width:0%} 100%{width:100%} }
+  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+  @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  /* PARTICLES */
+  .particle {
+    position:absolute; border-radius:50%;
+    background:var(--red); opacity:0;
+    animation:float-up 3s ease-in-out infinite;
+  }
+  @keyframes float-up {
+    0%{transform:translateY(100vh) scale(0);opacity:0}
+    50%{opacity:0.3}
+    100%{transform:translateY(-100px) scale(1);opacity:0}
+  }
+
+  /* HEADER */
+  header {
+    background:linear-gradient(135deg, #0d0d0d 0%, #1a0004 40%, #2d0008 70%, var(--dark-red) 100%);
+    color:white; padding:0; position:sticky; top:0; z-index:100;
+    box-shadow:0 2px 30px rgba(192,0,26,0.4);
+    border-bottom:2px solid var(--red);
+  }
+  .header-inner {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px 24px; max-width:1400px; margin:0 auto;
+  }
+  .header-logo { display:flex; align-items:center; gap:14px; }
+  .header-logo-img {
+    width:58px; height:58px; border-radius:50%; object-fit:cover;
+    border:2px solid var(--red); box-shadow:0 0 15px rgba(192,0,26,0.6);
+    animation:logo-pulse 3s ease-in-out infinite;
+  }
+  @keyframes logo-pulse {
+    0%,100%{box-shadow:0 0 10px rgba(192,0,26,0.5)}
+    50%{box-shadow:0 0 25px rgba(192,0,26,0.9), 0 0 40px rgba(192,0,26,0.4)}
+  }
+  .header-text h1 { font-size:1rem; font-weight:700; letter-spacing:0.5px; }
+  .header-text p { font-size:0.68rem; color:#ccc; margin-top:2px; }
+  nav { display:flex; gap:6px; }
+  nav button {
+    background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); color:white;
+    padding:8px 16px; border-radius:8px; cursor:pointer; font-size:0.82rem;
+    transition:all 0.3s; white-space:nowrap; letter-spacing:0.3px;
+  }
+  nav button:hover, nav button.active {
+    background:var(--red); border-color:var(--red); transform:translateY(-2px);
+    box-shadow:0 4px 15px rgba(192,0,26,0.5);
+  }
+  .admin-btn { background:rgba(192,0,26,0.2)!important; border-color:rgba(192,0,26,0.5)!important; }
+
+  /* MAIN */
+  main { max-width:1400px; margin:0 auto; padding:24px; }
+
+  /* SECTION CARDS */
+  .section { display:none; }
+  .section.active { display:block; animation:fadeIn 0.4s ease; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+  .page-title {
+    display:flex; align-items:center; gap:12px; margin-bottom:24px;
+    padding-bottom:14px; border-bottom:3px solid var(--red);
+    position:relative;
+  }
+  .page-title::after {
+    content:''; position:absolute; bottom:-3px; left:0; width:60px; height:3px;
+    background:var(--light-red); border-radius:2px;
+  }
+  .page-title h2 { font-size:1.35rem; color:var(--dark); font-weight:700; }
+  .page-title .icon {
+    width:42px; height:42px; background:linear-gradient(135deg,var(--dark-red),var(--red));
+    border-radius:10px; display:flex; align-items:center; justify-content:center;
+    color:white; font-size:1.2rem; box-shadow:0 4px 12px rgba(192,0,26,0.4);
+  }
+
+  /* FORM */
+  .form-card {
+    background:white; border-radius:14px; padding:28px;
+    box-shadow:0 2px 20px rgba(0,0,0,0.08); margin-bottom:20px;
+    border:1px solid rgba(0,0,0,0.05);
+    position:relative; overflow:hidden;
+  }
+  .form-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg, var(--dark-red), var(--red), var(--light-red));
+  }
+  .form-section-title {
+    font-size:0.95rem; font-weight:700; color:var(--red);
+    padding:8px 0; margin:20px 0 16px; border-bottom:2px solid #ffeaed;
+    display:flex; align-items:center; gap:8px;
+  }
+  .form-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+  .form-group { display:flex; flex-direction:column; gap:5px; }
+  .form-group.full { grid-column:1/-1; }
+  .form-group.half { grid-column:span 2; }
+  label { font-size:0.78rem; font-weight:600; color:var(--mid); letter-spacing:0.3px; }
+  input, select, textarea {
+    padding:10px 13px; border:1.5px solid var(--border); border-radius:8px;
+    font-size:0.87rem; transition:all 0.2s; background:#fafafa; color:var(--dark);
+  }
+  input:focus, select:focus, textarea:focus {
+    outline:none; border-color:var(--red); background:white;
+    box-shadow:0 0 0 3px rgba(192,0,26,0.1);
+  }
+  textarea { resize:vertical; min-height:80px; }
+
+  /* IMAGE UPLOAD */
+  .upload-zone {
+    border:2px dashed var(--border); border-radius:10px; padding:28px;
+    text-align:center; cursor:pointer; transition:all 0.3s; position:relative;
+    background:#fafafa;
+  }
+  .upload-zone:hover { border-color:var(--red); background:#fff5f6; }
+  .upload-zone input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; }
+  .upload-zone .up-icon { font-size:2.5rem; margin-bottom:8px; }
+  .upload-zone p { color:#888; font-size:0.85rem; }
+  .upload-preview { margin-top:12px; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+  .preview-item { position:relative; }
+  .preview-item img { width:80px; height:80px; object-fit:cover; border-radius:8px; border:2px solid var(--border); }
+
+  /* BUTTONS */
+  .btn {
+    padding:11px 24px; border:none; border-radius:9px; cursor:pointer;
+    font-size:0.87rem; font-weight:600; transition:all 0.25s; display:inline-flex;
+    align-items:center; gap:8px; letter-spacing:0.3px;
+  }
+  .btn-primary { background:linear-gradient(135deg,var(--dark-red),var(--red)); color:white; }
+  .btn-primary:hover { background:linear-gradient(135deg,var(--red),var(--light-red)); transform:translateY(-2px); box-shadow:0 6px 20px rgba(192,0,26,0.45); }
+  .btn-secondary { background:#f0f0f0; color:var(--dark); }
+  .btn-secondary:hover { background:#e0e0e0; transform:translateY(-1px); }
+  .btn-success { background:linear-gradient(135deg,#15803d,#16a34a); color:white; }
+  .btn-success:hover { transform:translateY(-1px); box-shadow:0 4px 12px rgba(21,128,61,0.4); }
+  .btn-warning { background:linear-gradient(135deg,#b45309,#d97706); color:white; }
+  .btn-warning:hover { transform:translateY(-1px); }
+  .btn-sm { padding:7px 14px; font-size:0.78rem; }
+  .btn-group { display:flex; gap:10px; flex-wrap:wrap; margin-top:22px; }
+
+  /* ADMIN */
+  .admin-gate {
+    max-width:420px; margin:60px auto; background:white; border-radius:18px;
+    padding:44px 40px; box-shadow:0 8px 40px rgba(0,0,0,0.12); text-align:center;
+    border-top:4px solid var(--red);
+  }
+  .admin-gate .lock-icon { font-size:3.5rem; margin-bottom:16px; }
+  .admin-gate h3 { color:var(--dark); margin-bottom:8px; font-size:1.2rem; }
+  .admin-gate p { font-size:0.82rem; color:#888; margin-bottom:22px; }
+  .admin-gate input {
+    width:100%; margin-bottom:14px; text-align:center; letter-spacing:6px; font-size:1.1rem;
+  }
+
+  /* DATA TABLE */
+  .table-controls {
+    background:white; border-radius:10px; padding:16px; margin-bottom:16px;
+    box-shadow:var(--shadow); display:flex; gap:12px; flex-wrap:wrap; align-items:center;
+  }
+  .table-controls input, .table-controls select { flex:1; min-width:180px; margin:0; }
+  .data-table-wrap { background:white; border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
+  .data-table { width:100%; border-collapse:collapse; font-size:0.82rem; }
+  .data-table th {
+    background:linear-gradient(135deg, #0d0d0d, #2a0005);
+    color:white; padding:12px 10px; text-align:left; font-size:0.78rem;
+    white-space:nowrap; position:sticky; top:0;
+  }
+  .data-table td { padding:10px; border-bottom:1px solid #f0f0f0; vertical-align:middle; }
+  .data-table tr:hover { background:#fff5f6; }
+  .data-table img.av { width:40px; height:40px; border-radius:50%; object-fit:cover; border:2px solid var(--red); }
+  .badge {
+    display:inline-block; padding:3px 10px; border-radius:20px; font-size:0.72rem;
+    font-weight:700; background:#ffeaed; color:var(--red);
+  }
+  .badge.nat { background:#e0f2fe; color:#0369a1; }
+
+  /* FICHE */
+  .fiche-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:20px; }
+  .fiche-card {
+    background:white; border-radius:14px; overflow:hidden; box-shadow:var(--shadow);
+    transition:transform 0.25s, box-shadow 0.25s; border:1px solid rgba(0,0,0,0.04);
+  }
+  .fiche-card:hover { transform:translateY(-5px); box-shadow:0 12px 35px rgba(0,0,0,0.15); }
+  .fiche-header {
+    background:linear-gradient(135deg, #0d0d0d, #2a0005, var(--dark-red));
+    padding:20px; display:flex; align-items:center; gap:14px; color:white;
+  }
+  .fiche-header img { width:70px; height:70px; border-radius:50%; object-fit:cover; border:3px solid rgba(255,255,255,0.3); }
+  .fiche-header .av-placeholder {
+    width:70px; height:70px; border-radius:50%; background:rgba(255,255,255,0.1);
+    display:flex; align-items:center; justify-content:center; font-size:1.8rem;
+    border:3px solid rgba(255,255,255,0.3);
+  }
+  .fiche-header h3 { font-size:1rem; }
+  .fiche-header p { font-size:0.78rem; color:#ccc; }
+  .fiche-body { padding:16px; }
+  .fiche-row { display:flex; justify-content:space-between; padding:6px 0;
+    border-bottom:1px solid #f5f5f5; font-size:0.82rem; }
+  .fiche-row span:first-child { color:#999; font-size:0.74rem; }
+  .fiche-row span:last-child { font-weight:600; text-align:right; max-width:60%; }
+  .fiche-actions { padding:12px 16px; display:flex; gap:8px; border-top:1px solid #f0f0f0; background:#fafafa; }
+
+  /* TABS */
+  .inner-tabs { display:flex; gap:8px; margin-bottom:22px; }
+  .inner-tab {
+    padding:9px 22px; border:2px solid var(--border); border-radius:9px;
+    background:white; cursor:pointer; font-size:0.84rem; font-weight:600;
+    transition:all 0.25s;
+  }
+  .inner-tab.active { background:linear-gradient(135deg,var(--dark-red),var(--red)); color:white; border-color:var(--red); box-shadow:0 4px 12px rgba(192,0,26,0.3); }
+
+  .docs-section { display:none; }
+  .docs-section.active { display:block; }
+
+  /* STATS */
+  .stats-bar { display:flex; gap:16px; margin-bottom:24px; flex-wrap:wrap; }
+  .stat-card {
+    background:white; border-radius:12px; padding:20px 24px; flex:1; min-width:150px;
+    box-shadow:var(--shadow); border-left:4px solid var(--red); display:flex; flex-direction:column;
+    transition:transform 0.2s;
+  }
+  .stat-card:hover { transform:translateY(-2px); }
+  .stat-card .num { font-size:2.2rem; font-weight:800; color:var(--red); }
+  .stat-card .lbl { font-size:0.74rem; color:#888; margin-top:4px; }
+
+  /* TOAST */
+  #toast {
+    position:fixed; bottom:24px; right:24px; background:#1a1a1a; color:white;
+    padding:13px 22px; border-radius:10px; font-size:0.85rem;
+    transform:translateY(100px); transition:transform 0.3s; z-index:9999;
+    display:flex; align-items:center; gap:10px; box-shadow:0 8px 25px rgba(0,0,0,0.25);
+  }
+  #toast.show { transform:translateY(0); }
+  #toast.success { border-left:4px solid #16a34a; }
+  #toast.error { border-left:4px solid var(--red); }
+
+  .empty-state { text-align:center; padding:60px 20px; color:#bbb; }
+  .empty-state .e-icon { font-size:4rem; margin-bottom:14px; }
+  .empty-state p { font-size:1rem; }
+
+  /* REGLAGE TAB */
+  #tab-reglage { }
+  .reglage-section { margin-bottom:20px; }
+
+  /* PRINT */
+  @media print {
+    #splash, header, .no-print { display:none!important; }
+    .section { display:block!important; }
+    body { background:white; }
+    .form-card, .data-table-wrap, .fiche-card { box-shadow:none; break-inside:avoid; }
+    .print-header { display:flex!important; }
+    .fiche-card { border:1px solid #ddd; }
+  }
+  .print-header { display:none; }
+  .print-header.visible {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px; border-bottom:2px solid var(--red); margin-bottom:20px;
+  }
+
+  /* Logo SVG animated for header */
+  .logo-container { position:relative; display:inline-block; }
+  .logo-outer-ring {
+    position:absolute; inset:-4px; border-radius:50%;
+    border:2px solid transparent;
+    background:linear-gradient(135deg,var(--red),transparent,var(--red)) border-box;
+    animation:spin-slow 8s linear infinite;
+  }
+  @keyframes spin-slow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+  /* Divider */
+  .section-divider {
+    height:1px; background:linear-gradient(90deg,transparent,var(--red),transparent);
+    margin:24px 0;
+  }
+
+  /* Field group label ar */
+  .field-ar { font-family:'Segoe UI',Tahoma,sans-serif; direction:rtl; text-align:right; }
+  .bilingual-label { display:flex; justify-content:space-between; align-items:center; }
+  .bilingual-label .ar { font-size:0.75rem; color:#999; direction:rtl; }
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <!-- Particles -->
+  <div class="particle" style="width:6px;height:6px;left:15%;animation-delay:0s;animation-duration:4s"></div>
+  <div class="particle" style="width:4px;height:4px;left:25%;animation-delay:0.5s;animation-duration:3.5s"></div>
+  <div class="particle" style="width:8px;height:8px;left:70%;animation-delay:1s;animation-duration:5s"></div>
+  <div class="particle" style="width:5px;height:5px;left:85%;animation-delay:1.5s;animation-duration:3s"></div>
+  <div class="particle" style="width:3px;height:3px;left:50%;animation-delay:0.8s;animation-duration:4.5s"></div>
+
+  <div class="logo-wrap">
+    <div class="logo-glow"></div>
+    <div class="logo-ring"></div>
+    <div class="logo-ring2"></div>
+    <div class="logo-ring3"></div>
+    <img id="splash-logo" src="" alt="Logo" onerror="this.style.display='none'">
+    <div id="splash-placeholder" style="width:220px;height:220px;border-radius:50%;background:linear-gradient(135deg,#5a0008,#c0001a);display:flex;align-items:center;justify-content:center;font-size:4rem;color:white;border:4px solid var(--red)">🥊</div>
+  </div>
+  <div class="splash-title">
+    <h1>الجامعة التونسية للكيك و التاي بوكسينغ</h1>
+    <h2>Fédération Tunisienne de Kick Thai Boxing</h2>
+    <p>Savate & Disciplines Associées — Gestion des Arbitres</p>
+  </div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
+
+<!-- TOAST -->
+<div id="toast">✓ Message</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="header-logo">
+      <div class="logo-container">
+        <img id="header-logo" class="header-logo-img" src="" alt="Logo" onerror="this.style.display='none'">
+        <div id="header-placeholder" style="width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--dark-red),var(--red));display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:white;box-shadow:0 0 20px rgba(192,0,26,0.6)">🥊</div>
+      </div>
+      <div class="header-text">
+        <h1>Fédération Tunisienne de Kick Thai Boxing Savate & DA</h1>
+        <p>الجامعة التونسية للكيك و التاي بوكسينغ السافات و الأنشطة التابعة — إدارة الحكام</p>
+      </div>
+    </div>
+    <nav>
+      <button class="active" onclick="showSection('inscription',this)">📋 Inscription</button>
+      <button onclick="showSection('documents',this)">📁 Documents</button>
+      <button class="admin-btn" onclick="showSection('admin',this)">🔐 Admin</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================== INSCRIPTION ===================== -->
+<div id="section-inscription" class="section active">
+  <div class="page-title">
+    <div class="icon">📋</div>
+    <h2>بطاقة إرشادات حكم — Fiche d'Accréditation Arbitre</h2>
+  </div>
+
+  <form id="form-arbitre" onsubmit="saveArbitre(event)">
+    <div class="form-card">
+      <div class="form-section-title">👤 Informations Personnelles — المعلومات الشخصية</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="bilingual-label"><span>Nom & Prénom *</span><span class="ar">الاسم واللقب</span></label>
+          <input type="text" id="f-nom" placeholder="Ahmed Ben Ali" required>
+        </div>
+        <div class="form-group">
+          <label class="bilingual-label"><span>Date de Naissance *</span><span class="ar">تاريخ الولادة</span></label>
+          <input type="date" id="f-dob" required>
+        </div>
+        <div class="form-group">
+          <label class="bilingual-label"><span>Lieu de Naissance</span><span class="ar">مكانها</span></label>
+          <input type="text" id="f-lieu-nais" placeholder="Tunis">
+        </div>
+        <div class="form-group">
+          <label class="bilingual-label"><span>CIN *</span><span class="ar">رقم بطاقة التعريف</span></label>
+          <input type="text" id="f-cin" placeholder="12345678" required>
+        </div>
+        <div class="form-group">
+          <label class="bilingual-label"><span>Date CIN</span><span class="ar">تاريخ البطاقة</span></label>
+          <input type="date" id="f-cin-date">
+        </div>
+        <div class="form-group">
+          <label class="bilingual-label"><span>Délivrée à</span><span class="ar">صادرة</span></label>
+          <input type="text" id="f-cin-lieu" placeholder="Tunis">
+        </div>
+        <div class="form-group full">
+          <label class="bilingual-label"><span>Adresse</span><span class="ar">العنوان الشخصي</span></label>
+          <input type="text" id="f-adresse" placeholder="Rue, Ville">
+        </div>
+        <div class="form-group">
+          <label class="bilingual-label"><span>Code Postal</span><span class="ar">الترقيم البريدي</span></label>
+          <input type="text" id="f-cp" placeholder="1000">
+        </div>
+        <div class="form-group">
+          <label class="bilingual-label"><span>Téléphone</span><span class="ar">الهاتف</span></label>
+          <input type="tel" id="f-tel" placeholder="+216 XX XXX XXX">
+        </div>
+        <div class="form-group">
+          <label class="bilingual-label"><span>Nationalité</span><span class="ar">الجنسية</span></label>
+          <input type="text" id="f-nationalite" value="Tunisienne">
+        </div>
+        <div class="form-group">
+          <label class="bilingual-label"><span>Profession</span><span class="ar">المهنة</span></label>
+          <input type="text" id="f-profession" placeholder="Enseignant, ...">
+        </div>
+        <div class="form-group">
+          <label class="bilingual-label"><span>Association / Club</span><span class="ar">الجمعية / النادي</span></label>
+          <input type="text" id="f-club" placeholder="Nom du club">
+        </div>
+        <div class="form-group">
+          <label class="bilingual-label"><span>Niveau Scolaire</span><span class="ar">المستوى الثقافي</span></label>
+          <select id="f-niveau">
+            <option value="">— Choisir —</option>
+            <option>Primaire</option><option>Secondaire</option>
+            <option>Baccalauréat</option><option>Licence</option>
+            <option>Master</option><option>Doctorat</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="bilingual-label"><span>Début Activité</span><span class="ar">تاريخ بداية ممارسة النشاط</span></label>
+          <input type="date" id="f-debut">
+        </div>
+        <div class="form-group">
+          <label class="bilingual-label"><span>Grade Actuel</span><span class="ar">التصنيف الحالي</span></label>
+          <input type="text" id="f-grade" placeholder="National, International...">
+        </div>
+        <div class="form-group">
+          <label class="bilingual-label"><span>Date Grade</span><span class="ar">تاريخ التصنيف</span></label>
+          <input type="date" id="f-grade-date">
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- NEW FIELDS -->
+      <div class="form-section-title">📊 Expérience & Participations — الخبرة والمشاركات</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="bilingual-label"><span>Années d'expérience en arbitrage</span><span class="ar">عدد سنوات الخبرة في التحكيم</span></label>
+          <input type="number" id="f-experience" placeholder="Ex: 5" min="0">
+        </div>
+        <div class="form-group">
+          <label class="bilingual-label"><span>Autre fonction au sein de la Fédération</span><span class="ar">صفة أخرى صلب الجامعة</span></label>
+          <input type="text" id="f-autre-fonction" placeholder="Entraîneur, Manager, Membre commission...">
+        </div>
+        <div class="form-group full">
+          <label class="bilingual-label"><span>Participations Internationales</span><span class="ar">أهم المشاركات الدولية</span></label>
+          <textarea id="f-part-intl" placeholder="Ex: Championnat du Monde 2022 (Thaïlande), Coupe d'Europe 2023 (Italie)..."></textarea>
+        </div>
+        <div class="form-group full">
+          <label class="bilingual-label"><span>Participations Nationales</span><span class="ar">أهم المشاركات الوطنية</span></label>
+          <textarea id="f-part-nat" placeholder="Ex: Championnat National 2023 (Tunis), Coupe de Tunisie 2024..."></textarea>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- PHOTO UPLOAD -->
+      <div class="form-section-title">📷 Photo de l'Arbitre — صورة الحكم</div>
+      <div class="upload-zone" id="photo-zone">
+        <input type="file" id="f-photo" accept="image/*" onchange="previewPhoto(this)">
+        <div class="up-icon">📷</div>
+        <p>Cliquer ou glisser-déposer la photo<br><small>JPG, PNG — max 5MB</small></p>
+        <div class="upload-preview" id="photo-preview"></div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-section-title">📎 Documents Joints — وثائق مرفقة</div>
+      <div class="upload-zone">
+        <input type="file" id="f-docs" multiple accept=".pdf,.jpg,.jpeg,.png" onchange="previewDocs(this)">
+        <div class="up-icon">📎</div>
+        <p>CIN, Diplômes, Certificats...<br><small>PDF, JPG, PNG — plusieurs fichiers acceptés</small></p>
+        <div class="upload-preview" id="docs-preview"></div>
+      </div>
+    </div>
+
+    <div class="btn-group no-print">
+      <button type="submit" class="btn btn-primary">💾 Enregistrer la Fiche</button>
+      <button type="button" class="btn btn-secondary" onclick="resetForm()">🔄 Réinitialiser</button>
+    </div>
+  </form>
+</div>
+
+<!-- ===================== DOCUMENTS ===================== -->
+<div id="section-documents" class="section">
+  <div class="page-title">
+    <div class="icon">📁</div>
+    <h2>Autres Documents — وثائق أخرى</h2>
+  </div>
+  <div class="form-card">
+    <div class="form-section-title">📤 Téléverser des Documents</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Type de Document</label>
+        <select id="doc-type">
+          <option>Règlement</option><option>Circulaire</option>
+          <option>Liste Arbitres</option><option>Résultats Compétition</option>
+          <option>Formation</option><option>Autre</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Titre / Description</label>
+        <input type="text" id="doc-titre" placeholder="Titre du document">
+      </div>
+      <div class="form-group">
+        <label>Saison</label>
+        <input type="text" id="doc-saison" value="2025/2026">
+      </div>
+    </div>
+    <div class="upload-zone" style="margin-top:16px">
+      <input type="file" id="doc-file" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" onchange="previewDocFile(this)">
+      <div class="up-icon">📁</div>
+      <p>Glisser-déposer ou cliquer<br><small>PDF, Word, Images</small></p>
+      <div class="upload-preview" id="docfile-preview"></div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="saveDocument()">💾 Enregistrer Document</button>
+    </div>
+  </div>
+  <div id="docs-list" style="margin-top:20px;">
+    <div class="empty-state"><div class="e-icon">📂</div><p>Aucun document enregistré</p></div>
+  </div>
+</div>
+
+<!-- ===================== ADMIN ===================== -->
+<div id="section-admin" class="section">
+  <div id="admin-gate">
+    <div class="admin-gate">
+      <div class="lock-icon">🔐</div>
+      <h3>Accès Administrateur</h3>
+      <p>Entrez le mot de passe pour accéder au panneau d'administration</p>
+      <input type="password" id="admin-pass" placeholder="••••••••" onkeypress="if(event.key==='Enter')checkAdmin()">
+      <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px" onclick="checkAdmin()">🔓 Connexion</button>
+    </div>
+  </div>
+
+  <div id="admin-panel" style="display:none">
+    <div class="page-title">
+      <div class="icon">⚙️</div>
+      <h2>Panneau Administrateur — لوحة الإدارة</h2>
+      <button class="btn btn-secondary btn-sm no-print" style="margin-left:auto" onclick="logout()">🚪 Déconnexion</button>
+    </div>
+
+    <div class="stats-bar" id="admin-stats"></div>
+
+    <div class="inner-tabs no-print">
+      <button class="inner-tab active" onclick="showAdminTab('tableau',this)">📊 Tableau</button>
+      <button class="inner-tab" onclick="showAdminTab('fiches',this)">🃏 Fiches</button>
+      <button class="inner-tab" onclick="showAdminTab('admin-docs',this)">📁 Documents</button>
+      <button class="inner-tab" onclick="showAdminTab('reglage',this)">⚙️ Réglages</button>
+    </div>
+
+    <!-- TABLEAU -->
+    <div id="tab-tableau" class="docs-section active">
+      <div class="table-controls no-print">
+        <input type="text" id="search-input" placeholder="🔍 Rechercher nom, CIN, club..." oninput="renderTable()">
+        <select id="filter-grade" onchange="renderTable()">
+          <option value="">Tous les grades</option>
+          <option>National</option><option>International</option><option>Régional</option>
+        </select>
+        <button class="btn btn-primary btn-sm" onclick="window.print()">🖨️ Imprimer</button>
+        <button class="btn btn-success btn-sm" onclick="exportCSV()">📥 CSV</button>
+      </div>
+      <div class="data-table-wrap" style="overflow-x:auto;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>#</th><th>Photo</th><th>Nom & Prénom</th><th>CIN</th>
+              <th>Date Nais.</th><th>Tél</th><th>Club</th><th>Grade</th>
+              <th>Expérience</th><th>Autre Fonction</th><th class="no-print">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- FICHES -->
+    <div id="tab-fiches" class="docs-section">
+      <div class="table-controls no-print">
+        <input type="text" id="fiche-search" placeholder="🔍 Rechercher..." oninput="renderFiches()">
+        <button class="btn btn-primary btn-sm" onclick="window.print()">🖨️ Imprimer</button>
+      </div>
+      <div class="fiche-grid" id="fiche-grid"></div>
+    </div>
+
+    <!-- DOCUMENTS ADMIN -->
+    <div id="tab-admin-docs" class="docs-section">
+      <div class="table-controls no-print">
+        <button class="btn btn-primary btn-sm" onclick="window.print()">🖨️ Imprimer</button>
+      </div>
+      <div id="admin-docs-list"></div>
+    </div>
+
+    <!-- RÉGLAGES -->
+    <div id="tab-reglage" class="docs-section">
+      <div class="form-card reglage-section">
+        <div class="form-section-title">🖼️ Logo de la Fédération — شعار الجامعة</div>
+        <p style="font-size:0.82rem;color:#888;margin-bottom:16px">
+          Téléversez le logo officiel. Il sera affiché dans l'écran de démarrage, l'en-tête et sur les fiches imprimées.
+        </p>
+        <div class="upload-zone" id="logo-upload-zone">
+          <input type="file" id="logo-upload" accept="image/*" onchange="uploadLogo(this)">
+          <div class="up-icon">🖼️</div>
+          <p>Glisser-déposer le logo ou cliquer<br><small>JPG, PNG, SVG — recommandé : fond transparent ou circulaire</small></p>
+          <div class="upload-preview" id="logo-preview"></div>
+        </div>
+        <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <div id="current-logo-display" style="display:none;align-items:center;gap:12px;padding:12px;background:#f9f9f9;border-radius:8px;border:1px solid #eee">
+            <img id="current-logo-img" src="" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid var(--red)">
+            <span style="font-size:0.82rem;color:#666">Logo actuel</span>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="removeLogo()">🗑️ Supprimer le logo</button>
+        </div>
+      </div>
+
+      <div class="form-card reglage-section">
+        <div class="form-section-title">🔑 Changer le Mot de Passe Admin</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Mot de passe actuel</label>
+            <input type="password" id="old-pass" placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label>Nouveau mot de passe</label>
+            <input type="password" id="new-pass" placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label>Confirmer nouveau mot de passe</label>
+            <input type="password" id="confirm-pass" placeholder="••••••••">
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="changePassword()">🔑 Modifier le Mot de Passe</button>
+        </div>
+      </div>
+
+      <div class="form-card reglage-section">
+        <div class="form-section-title" style="color:#c0001a">⚠️ Zone Danger — Réinitialisation</div>
+        <p style="font-size:0.82rem;color:#888;margin-bottom:16px">Ces actions sont irréversibles. Procédez avec précaution.</p>
+        <div class="btn-group">
+          <button class="btn btn-warning" onclick="clearAllArbitres()">🗑️ Supprimer tous les arbitres</button>
+          <button class="btn btn-warning" onclick="clearAllDocs()">🗑️ Supprimer tous les documents</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- PRINT HEADER -->
+<div class="print-header" id="print-header">
+  <div>
+    <strong>Fédération Tunisienne de Kick Thai Boxing Savate & DA</strong><br>
+    <small>28, rue des Glycines Boulevard Le Bardo 2000 | federationtktbsda@gmail.com | (00216) 71 501 860</small>
+  </div>
+  <div style="text-align:right">
+    <small id="print-date"></small>
+  </div>
+</div>
+
+<script>
+// ===== DATA STORE =====
+let DB = {
+  arbitres: JSON.parse(localStorage.getItem('ktb_arbitres') || '[]'),
+  documents: JSON.parse(localStorage.getItem('ktb_documents') || '[]')
+};
+let ADMIN_PASS = localStorage.getItem('ktb_admin_pass') || 'ktb2025admin';
+let adminLoggedIn = false;
+
+// ===== SPLASH =====
+window.addEventListener('load', () => {
+  initLogo();
+  setTimeout(() => {
+    document.getElementById('splash').classList.add('fade-out');
+    setTimeout(() => document.getElementById('splash').remove(), 800);
+  }, 3200);
+});
+
+// ===== LOGO =====
+function initLogo() {
+  const saved = localStorage.getItem('ktb_logo');
+  if(saved) {
+    applyLogo(saved);
+  }
+}
+
+function applyLogo(dataURL) {
+  const spl = document.getElementById('splash-logo');
+  const splP = document.getElementById('splash-placeholder');
+  const hdr = document.getElementById('header-logo');
+  const hdrP = document.getElementById('header-placeholder');
+  if(spl) { spl.src = dataURL; spl.style.display = 'block'; }
+  if(splP) splP.style.display = 'none';
+  if(hdr) { hdr.src = dataURL; hdr.style.display = 'block'; }
+  if(hdrP) hdrP.style.display = 'none';
+  const cur = document.getElementById('current-logo-img');
+  const curD = document.getElementById('current-logo-display');
+  if(cur) { cur.src = dataURL; }
+  if(curD) curD.style.display = 'flex';
+}
+
+async function uploadLogo(input) {
+  if(!input.files[0]) return;
+  const data = await toBase64(input.files[0]);
+  localStorage.setItem('ktb_logo', data);
+  applyLogo(data);
+  const preview = document.getElementById('logo-preview');
+  preview.innerHTML = `<div class="preview-item"><img src="${data}" alt="Logo"></div>`;
+  toast('Logo mis à jour avec succès !');
+}
+
+function removeLogo() {
+  if(!confirm('Supprimer le logo ?')) return;
+  localStorage.removeItem('ktb_logo');
+  document.getElementById('header-logo').style.display = 'none';
+  document.getElementById('header-placeholder').style.display = 'flex';
+  document.getElementById('current-logo-display').style.display = 'none';
+  document.getElementById('logo-preview').innerHTML = '';
+  toast('Logo supprimé', 'error');
+}
+
+// ===== CHANGE PASSWORD =====
+function changePassword() {
+  const old = document.getElementById('old-pass').value;
+  const nw = document.getElementById('new-pass').value;
+  const cf = document.getElementById('confirm-pass').value;
+  if(old !== ADMIN_PASS) { toast('Mot de passe actuel incorrect', 'error'); return; }
+  if(nw.length < 6) { toast('Nouveau mot de passe trop court (min 6 caractères)', 'error'); return; }
+  if(nw !== cf) { toast('Les mots de passe ne correspondent pas', 'error'); return; }
+  ADMIN_PASS = nw;
+  localStorage.setItem('ktb_admin_pass', nw);
+  document.getElementById('old-pass').value = '';
+  document.getElementById('new-pass').value = '';
+  document.getElementById('confirm-pass').value = '';
+  toast('Mot de passe modifié avec succès !');
+}
+
+// ===== CLEAR DATA =====
+function clearAllArbitres() {
+  if(!confirm('Supprimer TOUS les arbitres ? Cette action est irréversible.')) return;
+  DB.arbitres = [];
+  localStorage.setItem('ktb_arbitres', '[]');
+  renderTable(); renderFiches(); renderAdminStats();
+  toast('Tous les arbitres supprimés', 'error');
+}
+
+function clearAllDocs() {
+  if(!confirm('Supprimer TOUS les documents ? Cette action est irréversible.')) return;
+  DB.documents = [];
+  localStorage.setItem('ktb_documents', '[]');
+  renderAdminDocs(); renderDocsList(); renderAdminStats();
+  toast('Tous les documents supprimés', 'error');
+}
+
+// ===== NAV =====
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-'+id).classList.add('active');
+  if(btn) btn.classList.add('active');
+}
+
+// ===== TOAST =====
+function toast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = (type==='success'?'✓ ':'✕ ') + msg;
+  t.className = 'show ' + type;
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ===== PHOTO PREVIEW =====
+function previewPhoto(input) {
+  const preview = document.getElementById('photo-preview');
+  preview.innerHTML = '';
+  if(input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const div = document.createElement('div');
+      div.className = 'preview-item';
+      div.innerHTML = `<img src="${e.target.result}" alt="Photo" style="border:3px solid var(--red)">`;
+      preview.appendChild(div);
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function previewDocs(input) {
+  const preview = document.getElementById('docs-preview');
+  preview.innerHTML = '';
+  Array.from(input.files).forEach(f => {
+    const div = document.createElement('div');
+    div.className = 'preview-item';
+    div.innerHTML = `<div style="background:#f0f0f0;padding:8px;border-radius:6px;font-size:0.75rem;max-width:120px;word-break:break-all">📄 ${f.name}</div>`;
+    preview.appendChild(div);
+  });
+}
+
+function previewDocFile(input) {
+  const preview = document.getElementById('docfile-preview');
+  preview.innerHTML = '';
+  Array.from(input.files).forEach(f => {
+    const div = document.createElement('div');
+    div.className = 'preview-item';
+    div.innerHTML = `<div style="background:#f0f0f0;padding:8px;border-radius:6px;font-size:0.75rem;max-width:120px;word-break:break-all">📄 ${f.name}</div>`;
+    preview.appendChild(div);
+  });
+}
+
+// ===== SAVE ARBITRE =====
+async function saveArbitre(e) {
+  e.preventDefault();
+  let photoURL = '';
+  const photoFile = document.getElementById('f-photo').files[0];
+  if(photoFile) photoURL = await toBase64(photoFile);
+
+  const arbitre = {
+    id: Date.now(),
+    nom: document.getElementById('f-nom').value,
+    dob: document.getElementById('f-dob').value,
+    lieuNais: document.getElementById('f-lieu-nais').value,
+    cin: document.getElementById('f-cin').value,
+    cinDate: document.getElementById('f-cin-date').value,
+    cinLieu: document.getElementById('f-cin-lieu').value,
+    adresse: document.getElementById('f-adresse').value,
+    cp: document.getElementById('f-cp').value,
+    tel: document.getElementById('f-tel').value,
+    nationalite: document.getElementById('f-nationalite').value,
+    profession: document.getElementById('f-profession').value,
+    club: document.getElementById('f-club').value,
+    niveau: document.getElementById('f-niveau').value,
+    debut: document.getElementById('f-debut').value,
+    grade: document.getElementById('f-grade').value,
+    gradeDate: document.getElementById('f-grade-date').value,
+    experience: document.getElementById('f-experience').value,
+    autreFonction: document.getElementById('f-autre-fonction').value,
+    partIntl: document.getElementById('f-part-intl').value,
+    partNat: document.getElementById('f-part-nat').value,
+    photo: photoURL,
+    createdAt: new Date().toLocaleDateString('fr-FR')
+  };
+
+  DB.arbitres.push(arbitre);
+  localStorage.setItem('ktb_arbitres', JSON.stringify(DB.arbitres));
+  toast('Fiche arbitre enregistrée avec succès !');
+  resetForm();
+}
+
+function toBase64(file) {
+  return new Promise(r => {
+    const reader = new FileReader();
+    reader.onload = e => r(e.target.result);
+    reader.readAsDataURL(file);
+  });
+}
+
+function resetForm() {
+  document.getElementById('form-arbitre').reset();
+  document.getElementById('photo-preview').innerHTML = '';
+  document.getElementById('docs-preview').innerHTML = '';
+}
+
+// ===== SAVE DOCUMENT =====
+async function saveDocument() {
+  const file = document.getElementById('doc-file').files[0];
+  let fileData = '';
+  if(file) fileData = await toBase64(file);
+  const doc = {
+    id: Date.now(),
+    type: document.getElementById('doc-type').value,
+    titre: document.getElementById('doc-titre').value || 'Sans titre',
+    saison: document.getElementById('doc-saison').value,
+    fileName: file ? file.name : '',
+    fileData,
+    createdAt: new Date().toLocaleDateString('fr-FR')
+  };
+  DB.documents.push(doc);
+  localStorage.setItem('ktb_documents', JSON.stringify(DB.documents));
+  toast('Document enregistré !');
+  renderDocsList();
+  document.getElementById('doc-titre').value = '';
+  document.getElementById('docfile-preview').innerHTML = '';
+}
+
+function renderDocsList() {
+  const el = document.getElementById('docs-list');
+  if(!DB.documents.length) {
+    el.innerHTML = '<div class="empty-state"><div class="e-icon">📂</div><p>Aucun document enregistré</p></div>';
+    return;
+  }
+  el.innerHTML = DB.documents.map(d => `
+    <div class="form-card" style="margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <div>
+        <span class="badge nat">${d.type}</span>
+        <strong style="margin-left:8px">${d.titre}</strong>
+        <span style="font-size:0.78rem;color:#888;margin-left:8px">${d.saison} — ${d.createdAt}</span>
+        ${d.fileName ? `<span style="font-size:0.75rem;color:#aaa;margin-left:8px">📄 ${d.fileName}</span>` : ''}
+      </div>
+      <button class="btn btn-secondary btn-sm no-print" onclick="deleteDoc(${d.id})">🗑️</button>
+    </div>
+  `).join('');
+}
+renderDocsList();
+
+function deleteDoc(id) {
+  if(!confirm('Supprimer ce document ?')) return;
+  DB.documents = DB.documents.filter(d => d.id !== id);
+  localStorage.setItem('ktb_documents', JSON.stringify(DB.documents));
+  renderDocsList();
+  toast('Document supprimé', 'error');
+}
+
+// ===== ADMIN =====
+function checkAdmin() {
+  const p = document.getElementById('admin-pass').value;
+  if(p === ADMIN_PASS) {
+    adminLoggedIn = true;
+    document.getElementById('admin-gate').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'block';
+    renderAdminStats();
+    renderTable();
+    renderFiches();
+    renderAdminDocs();
+    // Show current logo if any
+    const saved = localStorage.getItem('ktb_logo');
+    if(saved) {
+      document.getElementById('current-logo-img').src = saved;
+      document.getElementById('current-logo-display').style.display = 'flex';
+    }
+  } else {
+    toast('Mot de passe incorrect', 'error');
+  }
+}
+
+function logout() {
+  adminLoggedIn = false;
+  document.getElementById('admin-gate').style.display = 'block';
+  document.getElementById('admin-panel').style.display = 'none';
+  document.getElementById('admin-pass').value = '';
+}
+
+function showAdminTab(id, btn) {
+  document.querySelectorAll('.docs-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.inner-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  if(btn) btn.classList.add('active');
+  if(id==='tableau') renderTable();
+  if(id==='fiches') renderFiches();
+  if(id==='admin-docs') renderAdminDocs();
+}
+
+function renderAdminStats() {
+  document.getElementById('admin-stats').innerHTML = `
+    <div class="stat-card"><div class="num">${DB.arbitres.length}</div><div class="lbl">Arbitres enregistrés</div></div>
+    <div class="stat-card"><div class="num">${DB.arbitres.filter(a=>a.grade==='International').length}</div><div class="lbl">Niveau International</div></div>
+    <div class="stat-card"><div class="num">${DB.arbitres.filter(a=>a.grade==='National').length}</div><div class="lbl">Niveau National</div></div>
+    <div class="stat-card"><div class="num">${DB.documents.length}</div><div class="lbl">Documents</div></div>
+  `;
+}
+
+function filterArbitres() {
+  const q = (document.getElementById('search-input')?.value||'').toLowerCase();
+  const g = document.getElementById('filter-grade')?.value||'';
+  return DB.arbitres.filter(a => {
+    const match = !q || a.nom.toLowerCase().includes(q) || a.cin.includes(q) || (a.club||'').toLowerCase().includes(q);
+    const gradeMatch = !g || a.grade === g;
+    return match && gradeMatch;
+  });
+}
+
+function renderTable() {
+  const data = filterArbitres();
+  const tbody = document.getElementById('admin-tbody');
+  if(!data.length) {
+    tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:40px;color:#aaa">Aucun arbitre trouvé</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = data.map((a,i) => `
+    <tr>
+      <td>${i+1}</td>
+      <td>${a.photo ? `<img class="av" src="${a.photo}" alt="">` : '<div style="width:40px;height:40px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:1.2rem">👤</div>'}</td>
+      <td><strong>${a.nom}</strong></td>
+      <td>${a.cin}</td>
+      <td>${a.dob ? new Date(a.dob).toLocaleDateString('fr-FR') : ''}</td>
+      <td>${a.tel||'—'}</td>
+      <td>${a.club||'—'}</td>
+      <td><span class="badge ${a.grade==='International'?'nat':''}">${a.grade||'—'}</span></td>
+      <td>${a.experience ? a.experience+' ans' : '—'}</td>
+      <td>${a.autreFonction||'—'}</td>
+      <td class="no-print">
+        <button class="btn btn-warning btn-sm" onclick="printSingleFiche(${a.id})">🖨️</button>
+        <button class="btn btn-secondary btn-sm" onclick="deleteArbitre(${a.id})">🗑️</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function renderFiches() {
+  const q = (document.getElementById('fiche-search')?.value||'').toLowerCase();
+  const data = DB.arbitres.filter(a => !q || a.nom.toLowerCase().includes(q) || (a.club||'').toLowerCase().includes(q));
+  const grid = document.getElementById('fiche-grid');
+  if(!data.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="e-icon">📋</div><p>Aucun arbitre</p></div>`;
+    return;
+  }
+  grid.innerHTML = data.map(a => `
+    <div class="fiche-card">
+      <div class="fiche-header">
+        ${a.photo ? `<img src="${a.photo}" alt="">` : '<div class="av-placeholder">👤</div>'}
+        <div>
+          <h3>${a.nom}</h3>
+          <p>${a.grade||''} ${a.club ? '— '+a.club : ''}</p>
+          <p style="font-size:0.72rem;color:#aaa;margin-top:2px">Enregistré le ${a.createdAt}</p>
+        </div>
+      </div>
+      <div class="fiche-body">
+        <div class="fiche-row"><span>CIN</span><span>${a.cin}</span></div>
+        <div class="fiche-row"><span>Né(e) le</span><span>${a.dob ? new Date(a.dob).toLocaleDateString('fr-FR') : '—'} ${a.lieuNais ? 'à '+a.lieuNais : ''}</span></div>
+        <div class="fiche-row"><span>Téléphone</span><span>${a.tel||'—'}</span></div>
+        <div class="fiche-row"><span>Profession</span><span>${a.profession||'—'}</span></div>
+        <div class="fiche-row"><span>Grade</span><span>${a.grade||'—'}</span></div>
+        <div class="fiche-row"><span>Expérience</span><span>${a.experience ? a.experience+' ans' : '—'}</span></div>
+        <div class="fiche-row"><span>Autre fonction</span><span>${a.autreFonction||'—'}</span></div>
+        <div class="fiche-row"><span>Part. Internationales</span><span style="font-size:0.75rem">${a.partIntl||'—'}</span></div>
+        <div class="fiche-row"><span>Part. Nationales</span><span style="font-size:0.75rem">${a.partNat||'—'}</span></div>
+      </div>
+      <div class="fiche-actions no-print">
+        <button class="btn btn-primary btn-sm" onclick="printSingleFiche(${a.id})">🖨️ Imprimer</button>
+        <button class="btn btn-secondary btn-sm" onclick="deleteArbitre(${a.id})">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderAdminDocs() {
+  const el = document.getElementById('admin-docs-list');
+  if(!DB.documents.length) {
+    el.innerHTML = '<div class="empty-state"><div class="e-icon">📂</div><p>Aucun document</p></div>';
+    return;
+  }
+  el.innerHTML = DB.documents.map(d => `
+    <div class="form-card" style="margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <div>
+        <span class="badge nat">${d.type}</span>
+        <strong style="margin-left:8px">${d.titre}</strong>
+        <span style="font-size:0.78rem;color:#888;margin-left:8px">${d.saison} — ${d.createdAt}</span>
+        ${d.fileName ? `<span style="font-size:0.75rem;color:#aaa;margin-left:8px">📄 ${d.fileName}</span>` : ''}
+      </div>
+      <div class="no-print" style="display:flex;gap:8px">
+        ${d.fileData ? `<button class="btn btn-success btn-sm" onclick="downloadDoc(${d.id})">⬇️</button>` : ''}
+        <button class="btn btn-secondary btn-sm" onclick="deleteDocAdmin(${d.id})">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function downloadDoc(id) {
+  const doc = DB.documents.find(d => d.id === id);
+  if(!doc || !doc.fileData) return;
+  const a = document.createElement('a');
+  a.href = doc.fileData;
+  a.download = doc.fileName || 'document';
+  a.click();
+}
+
+function deleteDocAdmin(id) {
+  if(!confirm('Supprimer ?')) return;
+  DB.documents = DB.documents.filter(d => d.id !== id);
+  localStorage.setItem('ktb_documents', JSON.stringify(DB.documents));
+  renderAdminDocs();
+  renderAdminStats();
+  toast('Supprimé', 'error');
+}
+
+function deleteArbitre(id) {
+  if(!confirm('Supprimer cet arbitre ?')) return;
+  DB.arbitres = DB.arbitres.filter(a => a.id !== id);
+  localStorage.setItem('ktb_arbitres', JSON.stringify(DB.arbitres));
+  renderTable();
+  renderFiches();
+  renderAdminStats();
+  toast('Arbitre supprimé', 'error');
+}
+
+// ===== PRINT SINGLE FICHE =====
+function printSingleFiche(id) {
+  const a = DB.arbitres.find(x => x.id === id);
+  if(!a) return;
+  const logo = localStorage.getItem('ktb_logo') || '';
+  const w = window.open('', '_blank');
+  w.document.write(`<!DOCTYPE html><html><head>
+  <meta charset="UTF-8"><title>Fiche Arbitre — ${a.nom}</title>
+  <style>
+    body{font-family:Segoe UI,sans-serif;padding:30px;color:#1a1a1a;font-size:13px}
+    .fed-header{display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid #c0001a;padding-bottom:16px;margin-bottom:20px}
+    .fed-header .fed-info{text-align:center;flex:1}
+    .fed-header h2{color:#c0001a;font-size:13px;margin:3px 0}
+    .fed-header p{color:#666;font-size:11px;margin:2px 0}
+    .fed-header img{width:75px;height:75px;border-radius:50%;object-fit:cover;border:3px solid #c0001a}
+    .logo-placeholder{width:75px;height:75px;border-radius:50%;background:#c0001a;display:flex;align-items:center;justify-content:center;font-size:2rem}
+    .person-header{display:flex;align-items:center;gap:20px;background:linear-gradient(135deg,#1a1a1a,#2a0005);color:white;padding:16px 20px;border-radius:10px;margin-bottom:16px}
+    .person-header img{width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid #c0001a}
+    .person-header h1{font-size:1.2rem;color:white;margin:0 0 4px}
+    .person-header p{font-size:11px;color:#ccc;margin:2px 0}
+    .section-title{background:#c0001a;color:white;padding:6px 14px;font-weight:700;font-size:12px;margin:16px 0 0;border-radius:4px 4px 0 0}
+    table{width:100%;border-collapse:collapse;font-size:12px}
+    td{padding:7px 12px;border:1px solid #e0e0e0}
+    td:first-child{font-weight:600;background:#fff5f6;width:38%;color:#555}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+    .info-box{background:#f9f9f9;border:1px solid #e0e0e0;border-radius:6px;padding:10px}
+    .info-box h4{color:#c0001a;font-size:11px;margin:0 0 5px;border-bottom:1px solid #ffd0d7;padding-bottom:4px}
+    .info-box p{font-size:11px;color:#444;line-height:1.5;margin:0}
+    .footer{margin-top:30px;display:flex;justify-content:space-between}
+    .sig-box{border-top:1px solid #999;padding-top:8px;text-align:center;min-width:180px;font-size:11px}
+    .contact-footer{text-align:center;font-size:10px;color:#aaa;margin-top:20px;border-top:1px solid #eee;padding-top:10px}
+  </style></head><body>
+  <div class="fed-header">
+    <div style="width:100px;display:flex;justify-content:flex-start">
+      ${logo ? `<img src="${logo}" alt="Logo">` : '<div class="logo-placeholder">🥊</div>'}
+    </div>
+    <div class="fed-info">
+      <h2>الجمهورية التونسية — République Tunisienne</h2>
+      <p>وزارة الشباب والرياضة — Ministère de la Jeunesse et des Sports</p>
+      <h2>الجامعة التونسية للكيك و التاي بوكسينغ السافات و الأنشطة التابعة</h2>
+      <p>Fédération Tunisienne de Kick Thai Boxing Savate & DA</p>
+      <p style="font-weight:700;color:#c0001a;margin-top:4px">بطـاقة إرشـادات حكـم — Saison 2025/2026</p>
+    </div>
+    <div style="width:100px"></div>
+  </div>
+
+  <div class="person-header">
+    ${a.photo ? `<img src="${a.photo}" alt="">` : '<div style="width:80px;height:80px;border-radius:50%;background:#444;display:flex;align-items:center;justify-content:center;font-size:2rem">👤</div>'}
+    <div>
+      <h1>${a.nom}</h1>
+      <p>Grade : <strong>${a.grade||'—'}</strong> | Club : <strong>${a.club||'—'}</strong></p>
+      <p>Enregistré le : ${a.createdAt}</p>
+    </div>
+  </div>
+
+  <div class="section-title">Informations Personnelles — المعلومات الشخصية</div>
+  <table>
+    <tr><td>الاسم واللقب / Nom Prénom</td><td>${a.nom}</td></tr>
+    <tr><td>تاريخ الولادة / Date Naissance</td><td>${a.dob ? new Date(a.dob).toLocaleDateString('fr-FR') : '—'} ${a.lieuNais ? '— à '+a.lieuNais : ''}</td></tr>
+    <tr><td>رقم بطاقة التعريف / CIN</td><td>${a.cin}${a.cinDate ? ' — '+new Date(a.cinDate).toLocaleDateString('fr-FR') : ''}${a.cinLieu ? ' — '+a.cinLieu : ''}</td></tr>
+    <tr><td>العنوان / Adresse</td><td>${a.adresse||'—'}${a.cp ? ' — CP: '+a.cp : ''}</td></tr>
+    <tr><td>الهاتف / Téléphone</td><td>${a.tel||'—'}</td></tr>
+    <tr><td>الجنسية / Nationalité</td><td>${a.nationalite||'—'}</td></tr>
+    <tr><td>المهنة / Profession</td><td>${a.profession||'—'}</td></tr>
+    <tr><td>الجمعية / Club</td><td>${a.club||'—'}</td></tr>
+    <tr><td>المستوى الثقافي / Niveau scolaire</td><td>${a.niveau||'—'}</td></tr>
+    <tr><td>تاريخ بداية النشاط / Début activité</td><td>${a.debut ? new Date(a.debut).toLocaleDateString('fr-FR') : '—'}</td></tr>
+    <tr><td>التصنيف الحالي / Grade actuel</td><td>${a.grade||'—'}${a.gradeDate ? ' — '+new Date(a.gradeDate).toLocaleDateString('fr-FR') : ''}</td></tr>
+  </table>
+
+  <div class="section-title">Expérience & Participations — الخبرة والمشاركات</div>
+  <table>
+    <tr><td>عدد سنوات الخبرة / Années d'expérience</td><td>${a.experience ? a.experience+' ans / سنوات' : '—'}</td></tr>
+    <tr><td>صفة أخرى صلب الجامعة / Autre fonction</td><td>${a.autreFonction||'—'}</td></tr>
+  </table>
+  <div class="two-col" style="margin-top:8px">
+    <div class="info-box">
+      <h4>🌍 أهم المشاركات الدولية — Participations Internationales</h4>
+      <p>${(a.partIntl||'—').replace(/\n/g,'<br>')}</p>
+    </div>
+    <div class="info-box">
+      <h4>🏆 أهم المشاركات الوطنية — Participations Nationales</h4>
+      <p>${(a.partNat||'—').replace(/\n/g,'<br>')}</p>
+    </div>
+  </div>
+
+  <p style="margin-top:20px;font-size:12px"><strong>أشهد أن المعلومات الواردة بهذه البطاقة صحيحة.</strong></p>
+  <div class="footer">
+    <div class="sig-box">إمضاء الحكم<br><br><br></div>
+    <div class="sig-box">إمضاء رئيس الجمعية / النادي<br><br><br></div>
+    <div class="sig-box">ختم الجامعة<br><br><br></div>
+  </div>
+  <div class="contact-footer">
+    28, rue des Glycines Boulevard Le Bardo 2000 | federationtktbsda@gmail.com | (00216) 71 501 860
+  </div>
+  </body></html>`);
+  w.document.close();
+  setTimeout(() => w.print(), 600);
+}
+
+// ===== EXPORT CSV =====
+function exportCSV() {
+  const data = filterArbitres();
+  const headers = ['Nom','CIN','Date Naissance','Lieu Naissance','Téléphone','Adresse','CP','Nationalité','Profession','Club','Niveau','Début Activité','Grade','Date Grade','Expérience (ans)','Autre Fonction','Participations Internationales','Participations Nationales','Date Enregistrement'];
+  const rows = data.map(a => [
+    a.nom, a.cin, a.dob, a.lieuNais, a.tel, a.adresse, a.cp,
+    a.nationalite, a.profession, a.club, a.niveau, a.debut,
+    a.grade, a.gradeDate, a.experience, a.autreFonction, a.partIntl, a.partNat, a.createdAt
+  ].map(v => `"${(v||'').replace(/"/g,'""')}"`).join(','));
+  const csv = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'arbitres_ktb_'+new Date().toLocaleDateString('fr-FR').replace(/\//g,'-')+'.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
